@@ -48,7 +48,7 @@ async def on_ready():
 async def trigger(ctx):
     await send_subject()
 
-for cog in ("manage_lists", "config", "help", "error"):
+for cog in ("manage_lists", "config", "help"):
     bot.load_extension("extensions.{}".format(cog))
     print("Loaded extension {}".format(cog))
 
