@@ -3,7 +3,7 @@
 import yaml
 
 with open("data/config.yml", "r") as file_:
-    config = yaml.safe_load(file_)
+    config = yaml.safe_load(file_) or {}
 
 def get(key):
     """Get config item"""
