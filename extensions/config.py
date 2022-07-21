@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+import discord
 from discord.ext import commands
 import typing
 
@@ -21,10 +22,17 @@ class Config(commands.Cog, name="Configuration"):
     async def config(self, ctx, key: typing.Literal["channel", "message"], *, value: typing.Optional[str]):
         if value is None:
             value = config.get(key)
-            await ctx.send("{} is {}".format(key.capitalize(), value))
+            message = "{} est {}".format(key.capitalize(), value)
         else:
             config.set(key, value)
-            await ctx.send("{} set to {}".format(key.capitalize(), value))
+            message = "{} a été défini sur {}".format(key.capitalize(), value)
+        
+        embed = discord.Embed(
+            colour = 0x595959,
+            description=message
+        )
+
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
