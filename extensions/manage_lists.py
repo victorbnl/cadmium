@@ -21,7 +21,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
     )
     async def add(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"], *args: str):
         with open("data/lists/{}s.yml".format(type), "r+") as file_:
-            items = yaml.safe_load(file_) or {}
+            items = yaml.safe_load(file_) or []
             for arg in args:
                 items.append(arg)
             file_.seek(0)
@@ -48,7 +48,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
     )
     async def remove(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"], *args: str):
         with open("data/lists/{}s.yml".format(type), "r+") as file_:
-            items = yaml.safe_load(file_) or {}
+            items = yaml.safe_load(file_) or []
             for arg in args:
                 items.remove(arg)
             file_.seek(0)
@@ -74,7 +74,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
     )
     async def list(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"]):
         with open("data/lists/{}s.yml".format(type), "r") as file_:
-            items = yaml.safe_load(file_) or {}
+            items = yaml.safe_load(file_) or []
             
         embed = discord.Embed(
             colour=0x4287f5,
