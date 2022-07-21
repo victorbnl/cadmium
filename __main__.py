@@ -39,7 +39,7 @@ async def block_other_guilds(ctx):
 @bot.event
 async def on_ready():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_subject, CronTrigger.from_crontab("6 1 * * *"))
+    scheduler.add_job(send_subject, CronTrigger.from_crontab("1 0 * * *"))
     scheduler.start()
 
     print("Ready!")
