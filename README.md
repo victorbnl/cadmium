@@ -7,12 +7,7 @@ Discord bot for the french server *Un sujet par jour*.
 # Run
 
 - Install the dependencies: `pip install -r requirements.txt`
-- Create a `.env` file with the token (or set it as an env variable):
-
-```
-SUBJECTS_BOT_TOKEN=<your token here>
-```
-
+- Copy the `.env.sample` file to `.env` and complete it (or set its variables in your environment)
 - Run the bot: `python3 .`
 
 [inflections.xml](http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/telechargement.html)
