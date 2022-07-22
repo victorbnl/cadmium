@@ -14,12 +14,12 @@ class Config(commands.Cog, name="Configuration"):
         brief="Définir ou afficher des paramètres",
         extras={
             "args": {
-                "key": "propriété à définir ou afficher (\"channel\", \"message\")",
+                "key": "propriété à définir ou afficher (\"channel\", \"message\", \"frequency\")",
                 "value": "valeur sur laquelle la configurer"
             }
         }
     )
-    async def config(self, ctx, key: typing.Literal["channel", "message"], *, value: typing.Optional[str]):
+    async def config(self, ctx, key: typing.Literal["channel", "message", "frequency"], *, value: typing.Optional[str]):
         if value is None:
             value = config.get(key)
             message = "{} est {}".format(key.capitalize(), value)
