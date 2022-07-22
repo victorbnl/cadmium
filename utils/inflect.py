@@ -44,7 +44,7 @@ def inflect(word, gender, number):
 
     for inflection in entry.findall("inflected"):
         inf_gender = get_inf_prop(inflection, "gender", "masculine")
-        inf_number = get_inf_prop(inflection, "num ber", "singular")
+        inf_number = get_inf_prop(inflection, "number", "singular")
 
         if inf_gender == gender and inf_number == number:
             return inflection.find("form").text
