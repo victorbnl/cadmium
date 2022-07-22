@@ -21,14 +21,20 @@ def find(word):
 
     raise WordNotFoundError
 
+def get_inf_prop(inflection, property, default):
+    try:
+        return inflection.find(f"feat[@name='{property}']").get("value")
+    except AttributeError:
+        return default
+
 def get_word_inf(word):
     """Get word inflection (gender and number)"""
 
     entry, inflection = find(word)
 
     return {
-        "gender": inflection.find("feat[@name='gender']").get("value"),
-        "number": inflection.find("feat[@name='number']").get("value")
+        "gender": get_inf_prop(inflection, "gender", "masculine"),
+        "number": get_inf_prop(inflection, "number", "singular")
     }
 
 def inflect(word, gender, number):
@@ -37,8 +43,8 @@ def inflect(word, gender, number):
     entry, _ = find(word)
 
     for inflection in entry.findall("inflected"):
-        inf_gender = inflection.find("feat[@name='gender']").get("value")
-        inf_number = inflection.find("feat[@name='number']").get("value")
+        inf_gender = get_inf_prop(inflection, "gender", "masculine")
+        inf_number = get_inf_prop(inflection, "num ber", "singular")
 
         if inf_gender == gender and inf_number == number:
             return inflection.find("form").text

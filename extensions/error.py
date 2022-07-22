@@ -3,7 +3,6 @@
 import discord
 from discord.ext import commands
 
-
 async def on_command_error(ctx, error):
     """Command error handler"""
     
@@ -14,7 +13,6 @@ async def on_command_error(ctx, error):
     )
     
     await ctx.send(embed=embed)
-
 
 def setup(bot):
     bot.add_listener(on_command_error)

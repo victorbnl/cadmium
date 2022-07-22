@@ -3,10 +3,8 @@
 import discord
 from discord.ext import commands
 
-
 class MyHelp(commands.HelpCommand):
     
-
     async def send_bot_help(self, mapping):
         """Main help menu"""
 
@@ -17,17 +15,16 @@ class MyHelp(commands.HelpCommand):
 
         for cog, commands in mapping.items():
             if len(commands) > 0:
-                cog_name = getattr(cog, "qualified_name", "Commandes principales")
+                cog_name = getattr(cog, "qualified_name", "Autres")
                 value = ""
                 for command in commands:
-                    value += "- `{}`: {}\n".format(
+                    value += "⠀- `{}`: {}\n".format(
                         command.name,
                         command.brief
                     )
                 embed.add_field(name=cog_name, value=value+"\n", inline=False)
         
         await channel.send(embed=embed)
-
 
     async def send_command_help(self, command):
         """Command help menu"""
@@ -78,14 +75,11 @@ class MyHelp(commands.HelpCommand):
 
         await channel.send(embed=embed)
 
-
     async def send_group_help():
         pass
 
-
     async def send_cog_help():
         pass
-
 
 def setup(bot):
     bot.help_command = MyHelp()

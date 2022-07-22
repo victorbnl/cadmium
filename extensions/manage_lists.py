@@ -6,10 +6,8 @@ from typing import Literal
 
 import yaml
 
-
 class ManageLists(commands.Cog, name="Gérer les listes"):
     
-
     @commands.command(
         brief="Ajoute un mot à une liste",
         extras={
@@ -35,7 +33,6 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
 
         await ctx.send(embed=embed)
 
-    
     @commands.command(
         aliases=["rm"],
         brief="Retire un mot d'une liste",
@@ -62,7 +59,6 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
 
         await ctx.send(embed=embed)
 
-    
     @commands.command(
         aliases=["ls"],
         brief="Affiche les mots d'une liste",
@@ -83,7 +79,6 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         )
 
         await ctx.send(embed=embed)
-
 
 def setup(bot):
     bot.add_cog(ManageLists(bot))

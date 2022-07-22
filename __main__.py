@@ -14,42 +14,41 @@ import utils.data as data
 import utils.config as config
 
 load_dotenv()
+token = os.environ["SUBJECTS_BOT_TOKEN"]
+guild = int(os.environ["SUBJECTS_BOT_GUILD"])
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix='$', intents=intents)
+class SubjectsBot(commands.Bot):
 
-token = os.environ["SUBJECTS_BOT_TOKEN"]
-guild = int(os.environ["SUBJECTS_BOT_GUILD"])
+    async def block_other_guilds_check(self, ctx):
+        return ctx.guild.id == guild
 
-async def send_subject():
-    channel_id = int(config.get("channel").replace("<#", "").replace(">", ""))
-    message = config.get("message")
-    subject = data.get_subject()
+    def __init__(self):
+        super().__init__(command_prefix='$', intents=intents)
 
-    channel = bot.get_channel(channel_id)
+        self.add_check(self.block_other_guilds_check)
 
-    await channel.send(message.format(subject))
+        for cog in ("manage_lists", "admin", "help", "error"):
+            self.load_extension("extensions.{}".format(cog))
+            print("Loaded extension {}".format(cog))
 
-@bot.check
-async def block_other_guilds(ctx):
-    return ctx.guild.id == guild
+    async def send_subject(self):
+        channel_id = int(config.get("channel").replace("<#", "").replace(">", ""))
+        message = config.get("message")
+        subject = data.get_subject()
 
-@bot.event
-async def on_ready():
-    scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_subject, CronTrigger.from_crontab(config.get("frequency")))
-    scheduler.start()
+        channel = bot.get_channel(channel_id)
 
-    print("Ready!")
+        await channel.send(message.format(subject))
 
-@bot.command(brief="Lancer manuellement la génération d'un sujet")
-async def trigger(ctx):
-    await send_subject()
+    async def on_ready(self):
+        scheduler = AsyncIOScheduler()
+        scheduler.add_job(self.send_subject, CronTrigger.from_crontab(config.get("frequency")))
+        scheduler.start()
 
-for cog in ("manage_lists", "config", "help"):
-    bot.load_extension("extensions.{}".format(cog))
-    print("Loaded extension {}".format(cog))
+        print("Ready!")
 
+bot = SubjectsBot()
 bot.run(token)

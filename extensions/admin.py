@@ -6,12 +6,10 @@ import typing
 
 import utils.config as config
 
-
-class Config(commands.Cog, name="Configuration"):
-
+class Config(commands.Cog, name="Administration"):
 
     @commands.command(
-        brief="Définir ou afficher des paramètres",
+        brief="Définir ou afficher des paramètres de configuration",
         extras={
             "args": {
                 "key": "propriété à définir ou afficher (\"channel\", \"message\", \"frequency\")",
@@ -33,7 +31,10 @@ class Config(commands.Cog, name="Configuration"):
         )
 
         await ctx.send(embed=embed)
-
+    
+    @commands.command(brief="Lancer manuellement la génération d'un sujet")
+    async def trigger(self, ctx):
+        await ctx.bot.send_subject()
 
 def setup(bot):
     bot.add_cog(Config(bot))
