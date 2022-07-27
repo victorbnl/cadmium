@@ -2,3 +2,6 @@
 
 class WordNotInDictionaryError(Exception):
     pass
+
+class InvalidConfigKeyError(Exception):
+    pass
