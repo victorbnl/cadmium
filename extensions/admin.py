@@ -26,6 +26,7 @@ class Config(commands.Cog, name="Administration"):
             def walk_conf(dict_=configuration, i=0, opts=[]):
                 for key in dict_:
                     if isinstance(dict_[key], dict):
+                        opts.append(f"{'⠀'*2*i} - `{key}`:")
                         walk_conf(dict_[key], i+1, opts)
                     else:
                         opts.append(f"{'⠀'*2*i} - `{key}`: {dict_[key]}")
