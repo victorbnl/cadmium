@@ -4,6 +4,8 @@ import discord
 from discord.ext import commands
 import typing
 
+import yaml
+
 import utils.config as config
 
 class Config(commands.Cog, name="Administration"):
@@ -17,10 +19,26 @@ class Config(commands.Cog, name="Administration"):
             }
         }
     )
-    async def config(self, ctx, key: typing.Literal["channel", "message", "frequency"], *, value: typing.Optional[str]):
-        if value is None:
+    async def config(self, ctx, key: typing.Optional[str], *, value: typing.Optional[str]):
+        if key is None:
+            configuration = config.get_config()
+            
+            def walk_conf(dict_=configuration, i=0, opts=[]):
+                for key in dict_:
+                    if isinstance(dict_[key], dict):
+                        walk_conf(dict_[key], i+1, opts)
+                    else:
+                        opts.append(f"{'⠀'*2*i} - `{key}`: {dict_[key]}")
+                return "\n".join(opts)
+            
+            string = walk_conf()
+
+            message = f"**Config**\n{string}"
+
+        elif value is None:
             value = config.get(key)
             message = "{} est {}".format(key.capitalize(), value)
+
         else:
             config.set(key, value)
             message = "{} a été défini sur {}".format(key.capitalize(), value)
