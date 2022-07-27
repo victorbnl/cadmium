@@ -22,6 +22,8 @@ def find(word):
     raise WordNotFoundError
 
 def get_inf_prop(inflection, property, default):
+    """Get inflection object property"""
+
     try:
         return inflection.find(f"feat[@name='{property}']").get("value")
     except AttributeError:
