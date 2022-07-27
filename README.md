@@ -1,4 +1,4 @@
-# Subjects bot
+<h1>Subjects Bot<img src=".readme/logo.png" align="right"></h1>
 
 Discord bot for the french server *Un sujet par jour*.
 
