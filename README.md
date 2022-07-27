@@ -2,7 +2,8 @@
 
 Discord bot for the french server *Un sujet par jour*.
 
-⚠️ This bot is designed for the french language and probably won't work as expected with other languages ⚠️
+> **Warning**
+> This bot is designed for the french language and probably won't work as expected with other languages
 
 # Run
 
