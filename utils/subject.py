@@ -5,9 +5,8 @@ import random
 from PyProbs import Probability as pr
 
 from utils.exceptions import *
+import utils.config as config
 import utils.inflect as inflect
-
-verb_prob = 0.3
 
 def get(type):
     """Get a random item of a given type"""
@@ -23,27 +22,27 @@ def get_subject():
 
     subject = []
 
-    is_verb = pr.Prob(verb_prob)
+    is_verb = pr.Prob(int(config.get("probs.verb")))
 
     # Verb
     if (is_verb):
-        verb_prob -= 0.1
+        config.set("probs.verb", int(config.get("probs.verb")) - 0.1)
         subject.append(get("verb"))
 
         # Adverb
-        add_adverb = pr.Prob(0.8)
+        add_adverb = pr.Prob(int(config.get("probs.adverb")))
         if (add_adverb):
             subject.append(get("adverb"))
 
     # Noun
     else:
-        verb_prob += 0.1
+        config.set("probs.verb", int(config.get("probs.verb")) + 0.1)
         
         noun = get("noun")
         subject.append(noun)
         
         # Adjective
-        add_adjective = pr.Prob(0.8)
+        add_adjective = pr.Prob(int(config.get("probs.adjective")))
         if (add_adjective):
             try:
                 form = inflect.get_word_attrs(noun)
@@ -59,7 +58,7 @@ def get_subject():
             subject.append(inflected_adj)
 
             # Second adjective
-            add_second_adjective = pr.Prob(0.25)
+            add_second_adjective = pr.Prob(int(config.get("probs.second_adjective")))
             if (add_second_adjective):
 
                 second_adjective = get("adjective")
