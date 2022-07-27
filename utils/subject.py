@@ -11,7 +11,7 @@ import utils.inflect as inflect
 def get(type):
     """Get a random item of a given type"""
 
-    with open("data/lists/{}s.yml".format(type), "r") as file_:
+    with open(f"data/lists/{type}s.yml", "r") as file_:
         items = yaml.safe_load(file_)
     return random.choice(items)
 

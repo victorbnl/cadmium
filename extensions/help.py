@@ -18,10 +18,7 @@ class MyHelp(commands.HelpCommand):
                 cog_name = getattr(cog, "qualified_name", "Autres")
                 value = ""
                 for command in commands:
-                    value += "⠀- `{}`: {}\n".format(
-                        command.name,
-                        command.brief
-                    )
+                    value += "⠀- `{command.name}`: {command.brief}\n"
                 embed.add_field(name=cog_name, value=value+"\n", inline=False)
         
         await channel.send(embed=embed)

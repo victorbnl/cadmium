@@ -38,11 +38,11 @@ class Config(commands.Cog, name="Administration"):
 
         elif value is None:
             value = config.get(key)
-            message = "{} est {}".format(key.capitalize(), value)
+            message = f"{key.capitalize()} est {value}"
 
         else:
             config.set(key, value)
-            message = "{} a été défini sur {}".format(key.capitalize(), value)
+            message = f"{key.capitalize()} a été défini sur {value}"
         
         embed = discord.Embed(
             colour = 0x595959,
