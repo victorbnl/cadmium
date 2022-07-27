@@ -1,55 +1,60 @@
 #-*- coding: utf-8 -*-
 
 from lxml import etree
+import json
 
-from utils.exceptions import *
+from utils.exceptions import WordNotInDictionaryError
 
-def find(word):
-    """Find word in dictionary and get entry and inflection"""
+dict_ = []
 
-    context = etree.iterparse("inflections.xml", events=("start",))
+def init():
+    """Parse dictionary"""
 
-    for action, elem in context:
+    global dict_
 
-        if elem.tag == "entry":
-            current_entry = elem
-        if elem.tag == "inflected":
-            current_inflection = elem
+    context = etree.iterparse("dict.xml", events=("end",), encoding="utf-8")
 
-        if elem.tag == "form" and elem.text == word:
-            return (current_entry, current_inflection)
+    entry = {}
+    pos = ""
+    for _, elem in context:
 
-    raise WordNotFoundError
+        if elem.tag == "pos":
+            pos = elem.get("name")
+        
+        if pos in ("noun", "adj"):
 
-def get_inf_prop(inflection, property, default):
-    """Get inflection object property"""
+            if elem.tag == "form":
+                form = elem.text
 
-    try:
-        return inflection.find(f"feat[@name='{property}']").get("value")
-    except AttributeError:
-        return default
+            if elem.tag == "feat":
+                if elem.get("name") == "gender":
+                    gender = elem.get("value")[0]
+                elif elem.get("name") == "number":
+                    number = elem.get("value")[0]
+            
+            if elem.tag == "inflected":
+                entry[f"{gender}{number}"] = form
+            
+            if elem.tag == "entry":
+                dict_.append(entry)
+                entry = {}
 
-def get_word_inf(word):
-    """Get word inflection (gender and number)"""
+def get_word_attrs(word):
+    """Get noun gender and number"""
 
-    entry, inflection = find(word)
+    for entry in dict_:
+        for form in entry:
+            if entry[form] == word:
+                return form
+    raise WordNotInDictionaryError
 
-    return {
-        "gender": get_inf_prop(inflection, "gender", "masculine"),
-        "number": get_inf_prop(inflection, "number", "singular")
-    }
+def inflect_word(word, form):
+    """Get adjective in a specific form"""
 
-def inflect(word, gender, number):
-    """Inflect adjective according to given gender and number"""
+    for entry in dict_:
+        for form_ in entry:
+            if entry[form_] == word:
+                return entry[form]
+    raise WordNotInDictionaryError
 
-    entry, _ = find(word)
-
-    for inflection in entry.findall("inflected"):
-        inf_gender = get_inf_prop(inflection, "gender", "masculine")
-        inf_number = get_inf_prop(inflection, "number", "singular")
-
-        if inf_gender == gender and inf_number == number:
-            return inflection.find("form").text
-
-if __name__ == "__main__":
-    print(inflect("outrecuidant", "feminine", "singular"))
+init()

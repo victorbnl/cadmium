@@ -10,7 +10,7 @@ from apscheduler.triggers.cron import CronTrigger
 from dotenv import load_dotenv
 import os
 
-import utils.data as data
+import utils.subject as subject
 import utils.config as config
 
 load_dotenv()
@@ -30,18 +30,18 @@ class SubjectsBot(commands.Bot):
 
         self.add_check(self.block_other_guilds_check)
 
-        for cog in ("manage_lists", "admin", "help", "error"):
+        for cog in ("manage_lists", "admin", "help"):
             self.load_extension("extensions.{}".format(cog))
             print("Loaded extension {}".format(cog))
 
     async def send_subject(self):
         channel_id = int(config.get("channel").replace("<#", "").replace(">", ""))
         message = config.get("message")
-        subject = data.get_subject()
+        todays_subject = subject.get_subject()
 
         channel = bot.get_channel(channel_id)
 
-        await channel.send(message.format(subject))
+        await channel.send(message.format(todays_subject))
 
     async def on_ready(self):
         scheduler = AsyncIOScheduler()

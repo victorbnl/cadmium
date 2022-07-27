@@ -10,4 +10,4 @@ Discord bot for the french server *Un sujet par jour*.
 - Copy the `.env.sample` file to `.env` and complete it (or set its variables in your environment)
 - Run the bot: `python3 .`
 
-[inflections.xml](http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/telechargement.html)
+[dict.xml](http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/telechargement.html)

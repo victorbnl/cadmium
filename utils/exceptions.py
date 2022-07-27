@@ -1,4 +1,4 @@
 #-*- coding: utf-8 -*-
 
-class WordNotFoundError(Exception):
+class WordNotInDictionaryError(Exception):
     pass

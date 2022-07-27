@@ -27,7 +27,7 @@ def get_subject():
 
     # Verb
     if (is_verb):
-        verb_prob -= 0.2
+        verb_prob -= 0.1
         subject.append(get("verb"))
 
         # Adverb
@@ -37,7 +37,7 @@ def get_subject():
 
     # Noun
     else:
-        verb_prob += 0.2
+        verb_prob += 0.1
         
         noun = get("noun")
         subject.append(noun)
@@ -46,21 +46,29 @@ def get_subject():
         add_adjective = pr.Prob(0.8)
         if (add_adjective):
             try:
-                noun_inf = inflect.get_word_inf(noun)
-            except WordNotFoundError:
-                noun_inf = {"gender": "masculine", "number": "singular"}
-
-            gender = noun_inf["gender"]
-            number = noun_inf["number"]
+                form = inflect.get_word_attrs(noun)
+            except WordNotInDictionaryError:
+                form = "ms"
 
             adjective = get("adjective")
-            subject.append(inflect.inflect(adjective, gender, number))
+            try:
+                inflected_adj = inflect.inflect_word(adjective, form)
+            except WordNotInDictionaryError:
+                inflected_adj = adjective
+
+            subject.append(inflected_adj)
 
             # Second adjective
             add_second_adjective = pr.Prob(0.25)
             if (add_second_adjective):
+
                 second_adjective = get("adjective")
-                subject.append(inflect.inflect(second_adjective, gender, number))
+                try:
+                    inflected_second_adj = inflect.inflect_word(form)
+                except WordNotInDictionaryError:
+                    inflected_second_adj = second_adjective
+                
+                subject.append(inflected_second_adj)
     
     return " ".join(subject)
 
