@@ -4,6 +4,7 @@ import yaml
 import random
 from PyProbs import Probability as pr
 
+from utils.exceptions import *
 import utils.inflect as inflect
 
 verb_prob = 0.3
@@ -44,7 +45,11 @@ def get_subject():
         # Adjective
         add_adjective = pr.Prob(0.8)
         if (add_adjective):
-            noun_inf = inflect.get_word_inf(noun)
+            try:
+                noun_inf = inflect.get_word_inf(noun)
+            except WordNotFoundError:
+                noun_inf = {"gender": "masculine", "number": "singular"}
+
             gender = noun_inf["gender"]
             number = noun_inf["number"]
 
