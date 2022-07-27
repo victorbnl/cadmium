@@ -14,8 +14,12 @@ import utils.subject as subject
 import utils.config as config
 
 load_dotenv()
-token = os.environ["SUBJECTS_BOT_TOKEN"]
-guild = int(os.environ["SUBJECTS_BOT_GUILD"])
+def getenv(var):
+    return os.environ(f"SUBJECTS_BOT_{var}")
+
+token = getenv("TOKEN")
+guild_id = int(getenv("GUILD"))
+role_id = int(getenv("ROLE"))
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -23,7 +27,8 @@ intents.message_content = True
 class SubjectsBot(commands.Bot):
 
     async def block_other_guilds_check(self, ctx):
-        return ctx.guild.id == guild
+        role = discord.utils.find(lambda r: r.id == role_id, ctx.guild.roles)
+        return ctx.guild.id == guild_id and role in ctx.author.roles
 
     def __init__(self):
         super().__init__(command_prefix='$', intents=intents)
