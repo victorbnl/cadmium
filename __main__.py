@@ -50,7 +50,7 @@ class SubjectsBot(commands.Bot):
 
     async def on_ready(self):
         scheduler = AsyncIOScheduler()
-        scheduler.add_job(self.send_subject, CronTrigger.from_crontab(config.get("frequency")))
+        scheduler.add_job(self.send_subject, CronTrigger.from_crontab(config.get("interval")))
         scheduler.start()
 
         print("Ready!")

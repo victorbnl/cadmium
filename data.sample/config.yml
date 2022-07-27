@@ -1,5 +1,5 @@
 channel: ''
-frequency: ''
+interval: ''
 message: ''
 probs:
   adjective: ''
