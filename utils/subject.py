@@ -26,7 +26,7 @@ def get_subject():
 
     # Verb
     if (is_verb):
-        config.set("probs.verb", float(config.get("probs.verb")) - 0.1)
+        config.set("probs.verb", round(float(config.get("probs.verb")) - float(config.get("probs.verb_step")), 2))
         subject.append(get("verb"))
 
         # Adverb
@@ -36,7 +36,7 @@ def get_subject():
 
     # Noun
     else:
-        config.set("probs.verb", float(config.get("probs.verb")) + 0.1)
+        config.set("probs.verb", round(float(config.get("probs.verb")) + float(config.get("probs.verb_step")), 2))
         
         noun = get("noun")
         subject.append(noun)
