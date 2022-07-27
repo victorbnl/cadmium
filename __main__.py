@@ -35,9 +35,9 @@ class SubjectsBot(commands.Bot):
 
         self.add_check(self.block_other_guilds_check)
 
-        for cog in ("manage_lists", "admin", "help"):
-            self.load_extension("extensions.{}".format(cog))
-            print("Loaded extension {}".format(cog))
+        for ext in ("manage_lists", "admin", "help", "error"):
+            self.load_extension("extensions.{}".format(ext))
+            print("Loaded extension {}".format(ext))
 
     async def send_subject(self):
         channel_id = int(config.get("channel").replace("<#", "").replace(">", ""))
