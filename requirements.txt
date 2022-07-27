@@ -1,5 +1,6 @@
 py-cord
 APScheduler
+tzlocal==2.1
 python-dotenv
 pyyaml
 pyprobs
