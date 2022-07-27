@@ -6,7 +6,7 @@ from PyProbs import Probability as pr
 
 import utils.inflect as inflect
 
-verb_prob = 0.4
+verb_prob = 0.3
 
 def get(type):
     """Get a random item of a given type"""
@@ -26,17 +26,17 @@ def get_subject():
 
     # Verb
     if (is_verb):
-        verb_prob -= 0.1
+        verb_prob -= 0.2
         subject.append(get("verb"))
 
         # Adverb
-        add_adverb = pr.Prob(0.7)
+        add_adverb = pr.Prob(0.75)
         if (add_adverb):
             subject.append(get("adverb"))
 
     # Noun
     else:
-        verb_prob += 0.1
+        verb_prob += 0.2
         
         noun = get("noun")
         subject.append(noun)
