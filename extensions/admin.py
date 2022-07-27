@@ -14,7 +14,7 @@ class Config(commands.Cog, name="Administration"):
         brief="Définir ou afficher des paramètres de configuration",
         extras={
             "args": {
-                "key": "propriété à définir ou afficher (\"channel\", \"message\", \"frequency\")",
+                "key": "propriété (utiliser des points pour les props imbriquées)",
                 "value": "valeur sur laquelle la configurer"
             }
         }
@@ -34,7 +34,7 @@ class Config(commands.Cog, name="Administration"):
             
             string = walk_conf()
 
-            message = f"**Config**\n{string}"
+            message = f"{string}"
 
         elif value is None:
             value = config.get(key)
