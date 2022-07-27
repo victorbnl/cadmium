@@ -30,7 +30,7 @@ def get_subject():
         subject.append(get("verb"))
 
         # Adverb
-        add_adverb = pr.Prob(0.75)
+        add_adverb = pr.Prob(0.8)
         if (add_adverb):
             subject.append(get("adverb"))
 
