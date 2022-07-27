@@ -15,7 +15,7 @@ import utils.config as config
 
 load_dotenv()
 def getenv(var):
-    return os.environ(f"SUBJECTS_BOT_{var}")
+    return os.environ[f"SUBJECTS_BOT_{var}"]
 
 token = getenv("TOKEN")
 guild_id = int(getenv("GUILD"))
