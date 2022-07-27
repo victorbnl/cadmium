@@ -51,6 +51,11 @@ class Config(commands.Cog, name="Administration"):
 
         await ctx.send(embed=embed)
     
+    @commands.command(brief="Relancer le scheduler après un changement d'intervalle")
+    async def reschedule(self, ctx):
+        ctx.bot.reschedule_job()
+        await ctx.send(f"Envoi reprogrammé à {config.get('interval')}")
+    
     @commands.command(brief="Lancer manuellement la génération d'un sujet")
     async def trigger(self, ctx):
         await ctx.bot.send_subject()

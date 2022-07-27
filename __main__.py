@@ -44,14 +44,17 @@ class SubjectsBot(commands.Bot):
         message = config.get("message")
         todays_subject = subject.get_subject()
 
-        channel = bot.get_channel(channel_id)
+        channel = self.get_channel(channel_id)
 
         await channel.send(message.format(todays_subject))
+    
+    def reschedule_job(self):
+        self.scheduler.reschedule_job("send_subject", trigger=CronTrigger.from_crontab(config.get("interval")))
 
     async def on_ready(self):
-        scheduler = AsyncIOScheduler()
-        scheduler.add_job(self.send_subject, CronTrigger.from_crontab(config.get("interval")))
-        scheduler.start()
+        self.scheduler = AsyncIOScheduler()
+        self.scheduler.add_job(self.send_subject, CronTrigger.from_crontab(config.get("interval")), id="send_subject")
+        self.scheduler.start()
 
         print("Ready!")
 
