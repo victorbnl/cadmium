@@ -1,8 +1,5 @@
 #-*- coding: utf-8 -*-
 
-import discord
-from discord.ext import commands
-
 async def on_command_error(ctx, error):
     """Command error handler"""
 
