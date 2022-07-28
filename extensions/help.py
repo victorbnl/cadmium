@@ -56,7 +56,7 @@ class MyHelp(commands.HelpCommand):
                 },
                 {
                     "name": "Paramètres",
-                    "value": "\n".join([f"⠀•⠀**{arg['name']}** : {arg['desc']}" for arg in args]),
+                    "value": "\n".join([f"⠀•⠀**{arg['name']}** : {arg['desc']}" for arg in args]) or "Pas de paramètres",
                 },
                 {
                     "name": "Alias",
