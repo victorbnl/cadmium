@@ -10,9 +10,10 @@ from apscheduler.triggers.cron import CronTrigger
 from dotenv import load_dotenv
 import os
 
+import discord_send_embed
+
 import utils.subject as subject
 import utils.config as config
-import utils.send_embed
 
 load_dotenv()
 def getenv(var):

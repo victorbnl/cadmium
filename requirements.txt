@@ -1,4 +1,5 @@
 py-cord
+discord-send-embed
 APScheduler
 tzlocal==2.1
 python-dotenv
