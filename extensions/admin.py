@@ -9,7 +9,7 @@ import os.path
 from utils.exceptions import *
 import utils.config as config
 
-class Config(commands.Cog, name="Administration"):
+class Config(commands.Cog, name="Administration", description="Administrer le bot"):
 
     @commands.command(brief="Met à jour le bot")
     async def update(self, ctx):
