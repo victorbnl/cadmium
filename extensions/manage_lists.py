@@ -1,10 +1,7 @@
-import discord
 from discord.ext import commands
 from typing import Literal
 
 import yaml
-
-import utils.config as config
 
 class ManageLists(commands.Cog, name="Gérer les listes"):
     
