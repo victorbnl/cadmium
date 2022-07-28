@@ -7,7 +7,7 @@ from apscheduler.triggers.cron import CronTrigger
 from dotenv import load_dotenv
 import os
 
-# import discord_send_embed
+import discord_send_embed
 from discord_simple_pretty_help import SimplePrettyHelp
 
 import utils.subject as subject
