@@ -6,6 +6,8 @@ from typing import Literal
 
 import yaml
 
+import utils.config as config
+
 class ManageLists(commands.Cog, name="Gérer les listes"):
     
     @commands.command(
@@ -27,7 +29,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             file_.truncate()
 
         embed = discord.Embed(
-            colour = 0x4287f5,
+            colour = int(config.get("colour"), 16),
             description=f"Ajouté·s à la liste {type}s : {', '.join(f'`{arg}`' for arg in args)}"
         )
 
@@ -53,7 +55,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             file_.truncate()
 
         embed = discord.Embed(
-            colour = 0x4287f5,
+            colour = int(config.get("colour"), 16),
             description=f"Retiré·s de la liste *{type}s* : {', '.join(f'`{arg}`' for arg in args)}"
         )
 
@@ -73,7 +75,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             items = yaml.safe_load(file_) or []
             
         embed = discord.Embed(
-            colour=0x4287f5,
+            colour=int(config.get("colour"), 16),
             title=f"{type.capitalize()}s",
             description=", ".join(f"`{item}`" for item in items)
         )

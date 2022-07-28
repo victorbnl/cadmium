@@ -18,7 +18,7 @@ class Config(commands.Cog, name="Administration"):
     async def update(self, ctx):
         if os.path.exists("update.sh"):
             await ctx.send(embed=discord.Embed(
-                colour=0x2b5966,
+                colour=int(config.get("colour"), 16),
                 description="Mise à jour du bot"
             ))
             subprocess.run(["./update.sh"])
@@ -61,7 +61,7 @@ class Config(commands.Cog, name="Administration"):
             message = f"{key.capitalize()} a été défini sur {value}"
         
         embed = discord.Embed(
-            colour = 0x595959,
+            colour = int(config.get("colour"), 16),
             description=message
         )
 

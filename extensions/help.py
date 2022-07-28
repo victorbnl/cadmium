@@ -3,6 +3,8 @@
 import discord
 from discord.ext import commands
 
+import utils.config as config
+
 class MyHelp(commands.HelpCommand):
     
     async def send_bot_help(self, mapping):
@@ -10,7 +12,7 @@ class MyHelp(commands.HelpCommand):
 
         channel = self.get_destination()
 
-        embed = discord.Embed(colour=0x2b5966)
+        embed = discord.Embed(colour=int(config.get("colour"), 16))
         embed.set_footer(text="Pour plus d'informations sur une commande : !help [command]")
 
         for cog, commands in mapping.items():
@@ -31,7 +33,7 @@ class MyHelp(commands.HelpCommand):
         embed = discord.Embed(
             title=command.name.capitalize(),
             description=command.brief,
-            colour=0x34484c
+            colour=int(config.get("colour"), 16)
         )
 
         for param in command.params:
