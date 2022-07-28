@@ -15,6 +15,26 @@ def get(type):
         items = yaml.safe_load(file_)
     return random.choice(items)
 
+def change_verb_prob(inc):
+    """Increment or decrement verb probability"""
+
+    current_verb_prob = float(config.get("probs.verb"))
+    step = float(config.get("probs.verb_step"))
+
+    if inc:
+        new_verb_prob = current_verb_prob + step
+    else:
+        new_verb_prob = current_verb_prob - step
+
+    new_verb_prob = round(new_verb_prob, 2)
+
+    if new_verb_prob < 0:
+        new_verb_prob = 0
+    elif new_verb_prob > 1:
+        new_verb_prob = 1
+    
+    config.set("probs.verb", new_verb_prob)
+
 def get_subject():
     """Generate a random subject"""
 
@@ -26,7 +46,7 @@ def get_subject():
 
     # Verb
     if (is_verb):
-        config.set("probs.verb", round(float(config.get("probs.verb")) - float(config.get("probs.verb_step")), 2))
+        change_verb_prob(False)
         subject.append(get("verb"))
 
         # Adverb
@@ -36,7 +56,7 @@ def get_subject():
 
     # Noun
     else:
-        config.set("probs.verb", round(float(config.get("probs.verb")) + float(config.get("probs.verb_step")), 2))
+        change_verb_prob(True)
         
         noun = get("noun")
         subject.append(noun)
