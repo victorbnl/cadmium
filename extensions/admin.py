@@ -5,10 +5,26 @@ from discord.ext import commands
 import typing
 
 import yaml
+import subprocess
+from sys import exit
+import os.path
 
+from utils.exceptions import *
 import utils.config as config
 
 class Config(commands.Cog, name="Administration"):
+
+    @commands.command(brief="Met à jour le bot")
+    async def update(self, ctx):
+        if os.path.exists("update.sh"):
+            await ctx.send(embed=discord.Embed(
+                colour=0x2b5966,
+                description="Mise à jour du bot"
+            ))
+            subprocess.run(["./update.sh"])
+            exit(0)
+        else:
+            raise MissingUpdateScriptError("Script de mise à jour manquant")
 
     @commands.command(
         brief="Définir ou afficher des paramètres de configuration",

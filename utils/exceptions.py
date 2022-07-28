@@ -5,3 +5,6 @@ class WordNotInDictionaryError(Exception):
 
 class InvalidConfigKeyError(Exception):
     pass
+
+class MissingUpdateScriptError(Exception):
+    pass
