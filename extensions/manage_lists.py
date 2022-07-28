@@ -28,12 +28,9 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             file_.write(yaml.dump(items, allow_unicode=True))
             file_.truncate()
 
-        embed = discord.Embed(
-            colour = int(config.get("colour"), 16),
-            description=f"Ajouté·s à la liste {type}s : {', '.join(f'`{arg}`' for arg in args)}"
-        )
-
-        await ctx.send(embed=embed)
+        await ctx.send_embed({
+            "description": f"Ajouté·s à la liste {type}s : {', '.join(f'`{arg}`' for arg in args)}"
+        })
 
     @commands.command(
         aliases=["rm"],
@@ -54,12 +51,9 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             file_.write(yaml.dump(items, allow_unicode=True))
             file_.truncate()
 
-        embed = discord.Embed(
-            colour = int(config.get("colour"), 16),
-            description=f"Retiré·s de la liste *{type}s* : {', '.join(f'`{arg}`' for arg in args)}"
-        )
-
-        await ctx.send(embed=embed)
+        await ctx.send_embed({
+            "description": f"Retiré·s de la liste *{type}s* : {', '.join(f'`{arg}`' for arg in args)}"
+        })
 
     @commands.command(
         aliases=["ls"],
@@ -73,14 +67,15 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
     async def list(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"]):
         with open(f"data/lists/{type}s.yml", "r") as file_:
             items = yaml.safe_load(file_) or []
-            
-        embed = discord.Embed(
-            colour=int(config.get("colour"), 16),
-            title=f"{type.capitalize()}s",
-            description=", ".join(f"`{item}`" for item in items)
-        )
 
-        await ctx.send(embed=embed)
+        await ctx.send_embed({
+            "title": f"{type.capitalize()}s",
+            "description": ", ".join(f"`{item}`" for item in items)
+        })
+    
+    @commands.command()
+    async def err(self, ctx):
+        raise Exception
 
 def setup(bot):
     bot.add_cog(ManageLists(bot))

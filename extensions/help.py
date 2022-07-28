@@ -12,36 +12,28 @@ class MyHelp(commands.HelpCommand):
 
         channel = self.get_destination()
 
-        embed = discord.Embed(colour=int(config.get("colour"), 16))
-        embed.set_footer(text="Pour plus d'informations sur une commande : !help [command]")
-
+        fields = []
         for cog, commands in mapping.items():
             if len(commands) > 0:
                 cog_name = getattr(cog, "qualified_name", "Autres")
                 value = ""
                 for command in commands:
                     value += f"⠀- `{command.name}`{('', f': {command.brief}')[bool(command.brief)]}\n"
-                embed.add_field(name=cog_name, value=value+"\n", inline=False)
-        
-        await channel.send(embed=embed)
+                fields.append({
+                    "name": cog_name,
+                    "value": value+"\n",
+                    "inline": False
+                })
+
+        await channel.send_embed({
+            "footer": {"text": "Pour plus d'informations sur une commande : !help [command]"},
+            "fields": fields
+        })
 
     async def send_command_help(self, command):
         """Command help menu"""
         
         channel = self.get_destination()
-
-        embed = discord.Embed(
-            title=command.name.capitalize(),
-            description=command.brief,
-            colour=int(config.get("colour"), 16)
-        )
-
-        usage = f"{self.context.clean_prefix}{command.name} {' '.join(f'[{arg}]' for arg in command.clean_params)}"
-        embed.add_field(
-            name="Utilisation",
-            value=f"```{usage}```",
-            inline=False
-        )
 
         args = []
         for param in command.clean_params.values():
@@ -54,20 +46,24 @@ class MyHelp(commands.HelpCommand):
                 "desc": desc
             })
 
-        if command.extras:
-            embed.add_field(
-                name="Paramètres",
-                value="\n".join([f"⠀•⠀**{arg['name']}** : {arg['desc']}" for arg in args]),
-                inline=False
-            )
-
-        embed.add_field(
-            name="Alias",
-            value=", ".join([f"`{command.name}`"] + [f"`{alias}`" for alias in command.aliases]),
-            inline=False
-        )
-
-        await channel.send(embed=embed)
+        await channel.send_embed({
+            "title": command.name.capitalize(),
+            "description": command.brief,
+            "fields": [
+                {
+                    "name": "Utilisation",
+                    "value": f"```\n{self.context.clean_prefix}{command.name} {' '.join(f'[{arg}]' for arg in command.clean_params)}\n```"
+                },
+                {
+                    "name": "Paramètres",
+                    "value": "\n".join([f"⠀•⠀**{arg['name']}** : {arg['desc']}" for arg in args]),
+                },
+                {
+                    "name": "Alias",
+                    "value": ", ".join([f"`{command.name}`"] + [f"`{alias}`" for alias in command.aliases]),
+                }
+            ]
+        })
 
     async def send_group_help():
         pass

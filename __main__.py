@@ -13,6 +13,7 @@ import os
 import utils.subject as subject
 import utils.config as config
 import utils.artwork as artwork
+import utils.send_embed
 
 load_dotenv()
 def getenv(var):

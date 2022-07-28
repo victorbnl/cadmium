@@ -16,10 +16,9 @@ class Config(commands.Cog, name="Administration"):
     @commands.command(brief="Met à jour le bot")
     async def update(self, ctx):
         if os.path.exists("update.sh"):
-            await ctx.send(embed=discord.Embed(
-                colour=int(config.get("colour"), 16),
-                description="Mise à jour du bot"
-            ))
+            await ctx.send_embed({
+                "description": "Mise à jour du bot"
+            })
             subprocess.run(["./update.sh"])
             exit(0)
         else:
@@ -58,13 +57,10 @@ class Config(commands.Cog, name="Administration"):
         else:
             config.set(key, value)
             message = f"{key.capitalize()} a été défini sur {value}"
-        
-        embed = discord.Embed(
-            colour = int(config.get("colour"), 16),
-            description=message
-        )
 
-        await ctx.send(embed=embed)
+        await ctx.send_embed({
+            "description": message
+        })
     
     @commands.command(brief="Relancer le scheduler après un changement d'intervalle")
     async def reschedule(self, ctx):
