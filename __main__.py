@@ -12,7 +12,6 @@ import os
 
 import utils.subject as subject
 import utils.config as config
-import utils.artwork as artwork
 import utils.send_embed
 
 load_dotenv()
@@ -49,9 +48,7 @@ class SubjectsBot(commands.Bot):
 
         channel = self.get_channel(channel_id)
 
-        image = artwork.subject_to_artwork(todays_subject)
-
-        await channel.send(file=discord.File(fp=image, filename="subject.jpg"))
+        await channel.send(message.format(todays_subject))
     
     def reschedule_job(self):
         self.scheduler.reschedule_job("send_subject", trigger=CronTrigger.from_crontab(config.get("interval")))
