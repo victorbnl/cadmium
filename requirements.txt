@@ -1,5 +1,6 @@
 py-cord
 discord-send-embed
+git+https://github.com/victorbnl/discord-simple-pretty-help
 APScheduler
 tzlocal==2.1
 python-dotenv

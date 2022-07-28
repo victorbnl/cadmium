@@ -7,7 +7,8 @@ from apscheduler.triggers.cron import CronTrigger
 from dotenv import load_dotenv
 import os
 
-import discord_send_embed
+# import discord_send_embed
+from discord_simple_pretty_help import SimplePrettyHelp
 
 import utils.subject as subject
 import utils.config as config
@@ -38,11 +39,11 @@ class SubjectsBot(commands.Bot):
         return ctx.guild.id == guild_id and role in ctx.author.roles
 
     def __init__(self):
-        super().__init__(command_prefix=prefix, intents=intents)
+        super().__init__(command_prefix=prefix, intents=intents, help_command=SimplePrettyHelp(color=int(config.get("color"), 16)))
 
         self.add_check(self.block_other_guilds_check)
 
-        for ext in ("manage_lists", "admin", "help", "error"):
+        for ext in ("manage_lists", "admin", "error"):
             self.load_extension(f"extensions.{ext}")
             print(f"Loaded extension {ext}")
 
