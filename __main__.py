@@ -20,6 +20,7 @@ def getenv(var):
 token = getenv("TOKEN")
 guild_id = int(getenv("GUILD"))
 role_id = int(getenv("ROLE"))
+prefix = getenv("PREFIX")
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -31,7 +32,7 @@ class SubjectsBot(commands.Bot):
         return ctx.guild.id == guild_id and role in ctx.author.roles
 
     def __init__(self):
-        super().__init__(command_prefix='$', intents=intents)
+        super().__init__(command_prefix=prefix, intents=intents)
 
         self.add_check(self.block_other_guilds_check)
 
