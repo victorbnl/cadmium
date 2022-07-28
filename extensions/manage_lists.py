@@ -72,10 +72,6 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             "title": f"{type.capitalize()}s",
             "description": ", ".join(f"`{item}`" for item in items)
         })
-    
-    @commands.command()
-    async def err(self, ctx):
-        raise Exception
 
 def setup(bot):
     bot.add_cog(ManageLists(bot))
