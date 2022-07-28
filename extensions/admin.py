@@ -4,7 +4,6 @@ import discord
 from discord.ext import commands
 import typing
 
-import yaml
 import subprocess
 from sys import exit
 import os.path
