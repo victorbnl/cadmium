@@ -36,11 +36,6 @@ class MyHelp(commands.HelpCommand):
             colour=int(config.get("colour"), 16)
         )
 
-        for param in command.params:
-            if param == "type":
-                print(dir(command.params[param]))
-                print(command.params[param].annotation)
-
         usage = f"{self.context.clean_prefix}{command.name} {' '.join(f'[{arg}]' for arg in command.clean_params)}"
         embed.add_field(
             name="Utilisation",
