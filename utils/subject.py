@@ -6,12 +6,10 @@ from utils.exceptions import *
 import utils.config as config
 import utils.inflect as inflect
 
-def get(type):
-    """Get a random item of a given type"""
-
-    with open(f"data/lists/{type}s.yml", "r") as file_:
-        items = yaml.safe_load(file_)
-    return random.choice(items)
+items = {}
+for list in ("noun", "adjective", "verb", "adverb"):
+    with open(f"data/lists/{list}s.yml", "r") as file_:
+        items[list] = yaml.safe_load(file_)
 
 def change_verb_prob(inc):
     """Increment or decrement verb probability"""
@@ -45,18 +43,18 @@ def get_subject():
     # Verb
     if (is_verb):
         change_verb_prob(False)
-        subject.append(get("verb"))
+        subject.append(random.choice(items["verb"]))
 
         # Adverb
         add_adverb = pr.Prob(float(config.get("probs.adverb")))
         if (add_adverb):
-            subject.append(get("adverb"))
+            subject.append(random.choice(items["adverb"]))
 
     # Noun
     else:
         change_verb_prob(True)
         
-        noun = get("noun")
+        noun = random.choice(items["noun"])
         subject.append(noun)
         
         # Adjective
@@ -67,7 +65,8 @@ def get_subject():
             except WordNotInDictionaryError:
                 form = "ms"
 
-            adjective = get("adjective")
+            adjectives = items["adjective"]
+            adjective = random.choice(adjectives)
             try:
                 inflected_adj = inflect.inflect_word(adjective, form)
             except WordNotInDictionaryError:
@@ -75,11 +74,13 @@ def get_subject():
 
             subject.append(inflected_adj)
 
+            adjectives.remove(adjective)
+
             # Second adjective
             add_second_adjective = pr.Prob(float(config.get("probs.second_adjective")))
             if (add_second_adjective):
 
-                second_adjective = get("adjective")
+                second_adjective = random.choice(adjectives)
                 try:
                     inflected_second_adj = inflect.inflect_word(second_adjective, form)
                 except WordNotInDictionaryError:
