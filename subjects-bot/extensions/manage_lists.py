@@ -1,3 +1,5 @@
+"""Manage the lists via bot commands."""
+
 from discord.ext import commands
 from typing import Literal
 
@@ -15,6 +17,8 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         }
     )
     async def add(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"], *args: str):
+        """Adds a word to a list."""
+
         with open(f"data/lists/{type}s.yml", "r+") as file_:
             items = yaml.safe_load(file_) or []
             for arg in args:
@@ -38,6 +42,8 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         }
     )
     async def remove(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"], *args: str):
+        """Removes a word from a list."""
+
         with open(f"data/lists/{type}s.yml", "r+") as file_:
             items = yaml.safe_load(file_) or []
             for arg in args:
@@ -60,6 +66,8 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         }
     )
     async def list(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"]):
+        """List the words of a list."""
+        
         with open(f"data/lists/{type}s.yml", "r") as file_:
             items = yaml.safe_load(file_) or []
 

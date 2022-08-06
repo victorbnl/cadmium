@@ -1,7 +1,9 @@
+"""Utilities for accessing and setting config parameters."""
+
 import yaml
 from functools import reduce
 
-from utils.exceptions import *
+from exceptions import *
 
 with open("data/config.yml", "r") as file_:
     config = yaml.safe_load(file_) or {}

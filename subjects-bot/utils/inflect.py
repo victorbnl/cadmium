@@ -1,7 +1,9 @@
+"""Inflection engine, makes adjectives agree with nouns."""
+
 from lxml import etree
 import json
 
-from utils.exceptions import WordNotInDictionaryError
+from exceptions import WordNotInDictionaryError
 
 dict_ = []
 

@@ -1,18 +1,22 @@
-import discord
-from discord.ext import commands
-import typing
+"""Commands for administrating the bot."""
 
 import subprocess
+import typing
 from sys import exit
 import os.path
 
-from utils.exceptions import *
-import utils.config as config
+from discord.ext import commands
+
+from exceptions import *
+
+from utils import config
 
 class Config(commands.Cog, name="Administration", description="Administrer le bot"):
 
     @commands.command(brief="Met à jour le bot")
     async def update(self, ctx):
+        """Updates the bot."""
+
         if os.path.exists("update.sh"):
             await ctx.send_embed({
                 "description": "Mise à jour du bot"
@@ -32,6 +36,8 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
         }
     )
     async def config(self, ctx, key: typing.Optional[str], *, value: typing.Optional[str]):
+        """Defines or shows configuration parameters."""
+
         if key is None:
             configuration = config.get_config()
             
@@ -62,11 +68,15 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
     
     @commands.command(brief="Relancer le scheduler après un changement d'intervalle")
     async def reschedule(self, ctx):
+        """Manually reschedules the job after an interval change."""
+
         ctx.bot.reschedule_job()
         await ctx.send(f"Envoi reprogrammé à {config.get('interval')}")
     
     @commands.command(brief="Lancer manuellement la génération d'un sujet")
     async def trigger(self, ctx):
+        """Manually starts sending a subject."""
+
         await ctx.bot.send_subject()
 
 def setup(bot):

@@ -1,3 +1,5 @@
+"""Displays command errors in a nice red embed."""
+
 async def on_command_error(ctx, error):
     """Command error handler"""
 
