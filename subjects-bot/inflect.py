@@ -19,23 +19,32 @@ class Inflect():
             if elem.tag == "pos":
                 pos = elem.get("name")
 
-            if pos in ("noun", "adj"):
+            if pos in ("noun", "adj", "verb"):
 
                 if elem.tag == "form":
                     form = elem.text
 
                 if elem.tag == "feat":
-                    if elem.get("name") == "gender":
+
+                    if elem.get("name") == "tense":
+                        tense = elem.get("value")
+
+                    elif elem.get("name") == "gender":
                         gender = elem.get("value")[0]
+                    
                     elif elem.get("name") == "number":
                         number = elem.get("value")[0]
 
                 if elem.tag == "inflected":
-                    entry[f"{gender}{number}"] = form
+                    if pos in ("noun", "adj") or (pos == "verb" and tense == "ppast"):
+                        entry[f"{gender}{number}"] = form
 
                 if elem.tag == "entry":
                     self.dictionary.append(entry)
                     entry = {}
+
+        with open("dicttest.json", "w") as file_:
+            file_.write(json.dumps(self.dictionary, indent=2, ensure_ascii=False))
 
     def get_word_attrs(self, word):
         """Get noun gender and number."""
@@ -55,3 +64,7 @@ class Inflect():
                 if entry[form_] == word:
                     return entry[form]
         raise WordNotInDictionaryError
+
+if __name__ == "__main__":
+    inflect = Inflect()
+    # print(inflect.get_word_attrs("maison"))
