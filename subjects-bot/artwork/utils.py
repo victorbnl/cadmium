@@ -43,4 +43,5 @@ def get_font(scale, variant):
 
 def get_fonts(scale):
     """Get a first-letter font and a normal font."""
+
     return (get_font(1.5 * scale, "Regular"), get_font(scale, "Medium"))
