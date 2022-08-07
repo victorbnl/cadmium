@@ -43,9 +43,6 @@ class Inflect():
                     self.dictionary.append(entry)
                     entry = {}
 
-        with open("dicttest.json", "w") as file_:
-            file_.write(json.dumps(self.dictionary, indent=2, ensure_ascii=False))
-
     def get_word_attrs(self, word):
         """Get noun gender and number."""
 
