@@ -1,0 +1,26 @@
+name: pytest
+
+on:
+  - push
+  - workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - shell: bash
+        run: pip install -r requirements.txt
+
+      - shell: bash
+        run: pip install pytest
+      
+      - shell: bash
+        run: PYTHONPATH=subjects-bot pytest subjects-bot
