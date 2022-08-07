@@ -10,7 +10,7 @@ role_id = int(env.get("ROLE"))
 prefix = env.get("PREFIX")
 
 # Get config
-color = config.get("color")
+color = int(config.get("color"), 16)
 
 # Define bot
 bot = SubjectsBot(guild_id, role_id, prefix, color)
