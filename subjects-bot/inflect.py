@@ -61,7 +61,3 @@ class Inflect():
                 if entry[form_] == word:
                     return entry[form]
         raise WordNotInDictionaryError
-
-if __name__ == "__main__":
-    inflect = Inflect()
-    # print(inflect.get_word_attrs("maison"))
