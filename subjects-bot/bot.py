@@ -5,6 +5,9 @@ from discord.ext import commands
 
 from discord_simple_pretty_help import SimplePrettyHelp
 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+
 import subject
 import artwork
 
@@ -60,6 +63,14 @@ class SubjectsBot(commands.Bot):
         raise NotImplementedError
 
     async def on_ready(self):
-        """When the bot starts."""
+        """Sets up the scheduler."""
+
+        scheduler = AsyncIOScheduler()
+        scheduler.add_job(
+            self.send_subject,
+            CronTrigger.from_crontab(config.get("interval")),
+            id="send_subject",
+        )
+        scheduler.start()
 
         print("Ready!")
