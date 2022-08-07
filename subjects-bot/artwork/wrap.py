@@ -1,5 +1,7 @@
 """Wraps the subject into two lines if it's too wide."""
 
+from artwork.data.line import Line
+
 from artwork.utils import *
 
 
@@ -35,10 +37,10 @@ def subject_lines(subject, size, first_line_max_width, second_line_max_width):
 
         # Return formatted lines with new text size
         return [
-            {"content": " ".join(l), "size": nsize} for l in [first_line, second_line]
+            Line(" ".join(l), nsize) for l in [first_line, second_line]
         ]
 
     # If subject is not too large
     else:
         # Just return it with its original size
-        return [{"content": subject, "size": size}]
+        return [Line(subject, size)]
