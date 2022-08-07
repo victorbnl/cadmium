@@ -1,6 +1,6 @@
 from PIL import ImageDraw
 
-from artwork.utils import *
+from subjects_bot.artwork.utils import *
 
 class Write():
     

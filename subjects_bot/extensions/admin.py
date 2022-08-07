@@ -8,9 +8,8 @@ import os.path
 import discord
 from discord.ext import commands
 
-from exceptions import *
-
-from utils import config
+from subjects_bot.exceptions import *
+from subjects_bot.utils import config
 
 
 class Config(commands.Cog, name="Administration", description="Administrer le bot"):

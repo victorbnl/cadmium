@@ -8,10 +8,8 @@ from discord_simple_pretty_help import SimplePrettyHelp
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-import subject
-import artwork
-
-from utils import config
+from subjects_bot import subject, artwork
+from subjects_bot.utils import config
 
 # Intents required for interacting with messages
 intents = discord.Intents.default()
@@ -43,7 +41,7 @@ class SubjectsBot(commands.Bot):
 
         # Load extensions (cogs)
         for ext in ("manage_lists", "admin", "error"):
-            self.load_extension(f"extensions.{ext}")
+            self.load_extension(f"subjects_bot.extensions.{ext}")
             print(f"Loaded extension {ext}")
 
     async def send_subject(self):

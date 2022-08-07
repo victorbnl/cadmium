@@ -2,7 +2,7 @@
 
 import yaml
 
-from exceptions import *
+from subjects_bot.exceptions import *
 
 # Read config file
 with open("data/config.yml", "r") as file_:

@@ -2,7 +2,7 @@
 
 from lxml import etree
 
-from exceptions import WordNotInDictionaryError
+from subjects_bot.exceptions import WordNotInDictionaryError
 
 
 class Inflect:

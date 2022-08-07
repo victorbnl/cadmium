@@ -4,11 +4,11 @@ import os
 from io import BytesIO
 from PIL import Image
 
-from artwork.data.line import Line
-from artwork.write import Write
+from subjects_bot.artwork.data.line import Line
+from subjects_bot.artwork.write import Write
 
-from artwork.utils import *
-from artwork.wrap import *
+from subjects_bot.artwork.utils import *
+from subjects_bot.artwork.wrap import *
 
 def subject_banner(message, subject):
     """Generate artwork from subject"""

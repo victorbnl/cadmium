@@ -1,8 +1,7 @@
 """Wraps the subject into two lines if it's too wide."""
 
-from artwork.data.line import Line
-
-from artwork.utils import *
+from subjects_bot.artwork.data.line import Line
+from subjects_bot.artwork.utils import *
 
 
 def subject_lines(subject, size, first_line_max_width, second_line_max_width):

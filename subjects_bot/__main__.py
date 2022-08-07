@@ -1,9 +1,7 @@
 """Main file, starts the bot and the scheduler."""
 
-from utils import env
-from utils import config
-
-from bot import SubjectsBot
+from subjects_bot.utils import env, config
+from subjects_bot.bot import SubjectsBot
 
 # Get environment variables
 token = env.get("TOKEN")

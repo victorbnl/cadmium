@@ -1,3 +1,3 @@
 """Generates a banner for a subject."""
 
-from artwork.artwork import subject_banner
+from subjects_bot.artwork.artwork import subject_banner
