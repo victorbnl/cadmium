@@ -7,4 +7,6 @@ load_dotenv()
 
 
 def get(key):
+    """Get an environment variable."""
+
     return environ[f"SUBJECTS_BOT_{key}"]

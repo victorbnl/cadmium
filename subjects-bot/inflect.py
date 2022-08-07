@@ -11,10 +11,9 @@ class Inflect:
     def __init__(self):
         self.dictionary = []
 
+        # Walk XML
         context = etree.iterparse("dict.xml", events=("end",), encoding="utf-8")
-
-        entry = {}
-        pos = ""
+        entry, pos = {}, ""
         for _, elem in context:
 
             if elem.tag == "pos":

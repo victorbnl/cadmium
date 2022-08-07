@@ -13,6 +13,7 @@ import artwork
 
 from utils import config
 
+# Intents required for interacting with messages
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -21,7 +22,7 @@ class SubjectsBot(commands.Bot):
     """The main bot class."""
 
     async def block_other_guilds_check(self, ctx):
-        """Checks if the command has been sent in the correct guild and by the correct role"""
+        """Checks if the command has been sent in the correct guild and by the correct role."""
 
         role = discord.utils.find(lambda r: r.id == self.role_id, ctx.guild.roles)
         return ctx.guild.id == self.guild_id and role in ctx.author.roles
@@ -35,11 +36,12 @@ class SubjectsBot(commands.Bot):
             help_command=SimplePrettyHelp(color=color),
         )
 
+        # Command check
         self.guild_id = guild_id
         self.role_id = role_id
-
         self.add_check(self.block_other_guilds_check)
 
+        # Load extensions (cogs)
         for ext in ("manage_lists", "admin", "error"):
             self.load_extension(f"extensions.{ext}")
             print(f"Loaded extension {ext}")
@@ -47,14 +49,18 @@ class SubjectsBot(commands.Bot):
     async def send_subject(self):
         """Sends a subject. Function to be called at every interval and by the trigger command."""
 
+        # Channel
         channel_id = int(config.get("channel").replace("<#", "").replace(">", ""))
+        channel = self.get_channel(channel_id)
+
+        # Message and subject
         message = config.get("message")
         todays_subject = subject.get_subject()
 
-        channel = self.get_channel(channel_id)
-
+        # Get banner with the subject
         image = artwork.subject_banner(message, todays_subject)
 
+        # Send subject
         await channel.send(file=discord.File(fp=image, filename="subject.jpg"))
 
     def reschedule_job(self):
@@ -65,6 +71,7 @@ class SubjectsBot(commands.Bot):
     async def on_ready(self):
         """Sets up the scheduler."""
 
+        # Create the scheduler used to send subject each `interval`
         scheduler = AsyncIOScheduler()
         scheduler.add_job(
             self.send_subject,

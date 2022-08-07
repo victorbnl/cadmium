@@ -24,6 +24,7 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
             await ctx.send(embed=discord.Embed(description="Mise à jour du bot"))
             subprocess.run(["./update.sh"])
             exit(0)
+
         else:
             raise MissingUpdateScriptError("Script de mise à jour manquant")
 
@@ -41,6 +42,7 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
     ):
         """Defines or shows configuration parameters."""
 
+        # Key is none -> getting full configuration
         if key is None:
             configuration = config.get_config()
 
@@ -57,14 +59,17 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
 
             message = f"{string}"
 
+        # Value is None but key is not -> getting config parameter
         elif value is None:
             value = config.get(key)
             message = f"{key.capitalize()} est {value}"
 
+        # Both key and value are set -> set config parameter
         else:
             config.set(key, value)
             message = f"{key.capitalize()} a été défini sur {value}"
 
+        # Send what has been done
         await ctx.send(embed=discord.Embed(description=message))
 
     @commands.command(brief="Relancer le scheduler après un changement d'intervalle")
