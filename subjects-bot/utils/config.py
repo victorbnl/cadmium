@@ -1,7 +1,6 @@
 """Utilities for accessing and setting config parameters."""
 
 import yaml
-from functools import reduce
 
 from exceptions import *
 
