@@ -1,6 +1,5 @@
 """Main file, starts the bot and the scheduler."""
 
-
 from utils import env
 from utils import config
 
