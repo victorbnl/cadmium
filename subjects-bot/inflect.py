@@ -4,7 +4,8 @@ from lxml import etree
 
 from exceptions import WordNotInDictionaryError
 
-class Inflect():
+
+class Inflect:
     """French inflection engine."""
 
     def __init__(self):
@@ -31,7 +32,7 @@ class Inflect():
 
                     elif elem.get("name") == "gender":
                         gender = elem.get("value")[0]
-                    
+
                     elif elem.get("name") == "number":
                         number = elem.get("value")[0]
 
@@ -51,7 +52,6 @@ class Inflect():
                 if entry[form] == word:
                     return form
         raise WordNotInDictionaryError
-
 
     def inflect_word(self, word, form):
         """Get adjective in a specific form."""
