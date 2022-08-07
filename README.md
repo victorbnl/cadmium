@@ -12,5 +12,3 @@ Discord bot for the french server *Un sujet par jour*.
     - Set the required variables in `.env`
     - Complete `data/config.yml`
 - Run the bot: `python3 subjects-bot`
-
-[dict.xml](http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/telechargement.html)
