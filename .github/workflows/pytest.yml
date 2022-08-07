@@ -11,6 +11,11 @@ jobs:
     steps:
 
       - uses: actions/checkout@v2
+        with:
+          lfs: true
+      
+      - shell: bash
+        run: git lfs checkout
 
       - uses: actions/setup-python@v2
         with:
