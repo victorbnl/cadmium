@@ -1,5 +1,6 @@
 """Manage the lists via bot commands."""
 
+import discord
 from discord.ext import commands
 from typing import Literal
 
@@ -29,11 +30,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             file_.write(yaml.dump(items, allow_unicode=True))
             file_.truncate()
 
-        await ctx.send_embed(
-            {
-                "description": f"Ajouté·s à la liste {type}s : {', '.join(f'`{arg}`' for arg in args)}"
-            }
-        )
+        await ctx.send(embed=discord.Embed(description=f"Ajouté·s à la liste {type}s : {', '.join(f'`{arg}`' for arg in args)}"))
 
     @commands.command(
         aliases=["rm"],
@@ -58,11 +55,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
             file_.write(yaml.dump(items, allow_unicode=True))
             file_.truncate()
 
-        await ctx.send_embed(
-            {
-                "description": f"Retiré·s de la liste *{type}s* : {', '.join(f'`{arg}`' for arg in args)}"
-            }
-        )
+        await ctx.send(embed=discord.Embed(description=f"Retiré·s de la liste *{type}s* : {', '.join(f'`{arg}`' for arg in args)}"))
 
     @commands.command(
         aliases=["ls"],
@@ -75,12 +68,7 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         with open(f"data/lists/{type}s.yml", "r") as file_:
             items = yaml.safe_load(file_) or []
 
-        await ctx.send_embed(
-            {
-                "title": f"{type.capitalize()}s",
-                "description": ", ".join(f"`{item}`" for item in items),
-            }
-        )
+        await ctx.send(embed=discord.Embed(title=f"{type.capitalize()}s", description=", ".join(f"`{item}`" for item in items)))
 
 
 def setup(bot):

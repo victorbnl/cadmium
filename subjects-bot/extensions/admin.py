@@ -5,6 +5,7 @@ import typing
 from sys import exit
 import os.path
 
+import discord
 from discord.ext import commands
 
 from exceptions import *
@@ -18,7 +19,7 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
         """Updates the bot."""
 
         if os.path.exists("update.sh"):
-            await ctx.send_embed({"description": "Mise à jour du bot"})
+            await ctx.send(embed=discord.Embed(description="Mise à jour du bot"))
             subprocess.run(["./update.sh"])
             exit(0)
         else:
@@ -62,7 +63,7 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
             config.set(key, value)
             message = f"{key.capitalize()} a été défini sur {value}"
 
-        await ctx.send_embed({"description": message})
+        await ctx.send(embed=discord.Embed(description=message))
 
     @commands.command(brief="Relancer le scheduler après un changement d'intervalle")
     async def reschedule(self, ctx):

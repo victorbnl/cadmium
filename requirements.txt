@@ -1,5 +1,4 @@
 py-cord
-discord-send-embed
 discord-simple-pretty-help
 APScheduler
 tzlocal==2.1

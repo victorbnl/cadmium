@@ -3,8 +3,6 @@
 import discord
 from discord.ext import commands
 
-import discord_send_embed
-
 from discord_simple_pretty_help import SimplePrettyHelp
 
 import subject
