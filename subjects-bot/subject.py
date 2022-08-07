@@ -4,10 +4,12 @@ import yaml
 import random
 from PyProbs import Probability as pr
 
-import inflect
+from inflect import Inflect
 from exceptions import *
 
 from utils import config
+
+inflect = Inflect()
 
 items = {}
 for list in ("noun", "adjective", "verb", "adverb"):
