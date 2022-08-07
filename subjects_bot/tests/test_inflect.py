@@ -1,3 +1,5 @@
+import pytest
+
 from inflect import Inflect
 from exceptions import *
 
@@ -21,10 +23,8 @@ def test_attrs_fp():
 
 
 def test_attrs_uk():
-    try:
+    with pytest.raises(WordNotInDictionaryError):
         inflect.get_word_attrs("squfhzq")
-    except WordNotInDictionaryError:
-        assert True
 
 
 def test_adj_ms_ms():
@@ -92,28 +92,20 @@ def test_adj_fp_fp():
 
 
 def test_adj_uk_ms():
-    try:
+    with pytest.raises(WordNotInDictionaryError):
         inflect.inflect_word("qefsd", "ms")
-    except WordNotInDictionaryError:
-        assert True
 
 
 def test_adj_uk_mp():
-    try:
+    with pytest.raises(WordNotInDictionaryError):
         inflect.inflect_word("fhdfqdf", "mp")
-    except WordNotInDictionaryError:
-        assert True
 
 
 def test_adj_uk_fs():
-    try:
+    with pytest.raises(WordNotInDictionaryError):
         inflect.inflect_word("dyhfgpj", "fs")
-    except WordNotInDictionaryError:
-        assert True
 
 
 def test_adj_uk_fp():
-    try:
+    with pytest.raises(WordNotInDictionaryError):
         inflect.inflect_word("opfisj", "fp")
-    except WordNotInDictionaryError:
-        assert True
