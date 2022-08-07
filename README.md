@@ -1,5 +1,7 @@
 <h1>Subjects Bot<img src=".readme/logo.png" align="right"></h1>
 
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fatrox%2Fsync-dotenv%2Fbadge&style=flat&label=Tests&logo=_)](https://github.com/victorbnl/subjects-bot/actions/workflows/pytest.yml)
+
 Discord bot for the french server *Un sujet par jour*.
 
 > **Warning**
