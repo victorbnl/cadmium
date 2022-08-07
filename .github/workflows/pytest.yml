@@ -34,4 +34,4 @@ jobs:
       
       - name: Run pytest
         shell: bash
-        run: PYTHONPATH=subjects-bot pytest subjects-bot
+        run: python3 -m pytest

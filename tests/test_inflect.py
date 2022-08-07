@@ -1,7 +1,7 @@
 import pytest
 
-from inflect import Inflect
-from exceptions import *
+from subjects_bot.inflect import Inflect
+from subjects_bot.exceptions import *
 
 inflect = Inflect()
 
