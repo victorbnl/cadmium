@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw
 
 from utils.artwork.utils import *
 
+
 def draw_lines(lines, x, start_y, color):
 
     current_y = start_y
@@ -16,22 +17,18 @@ def draw_lines(lines, x, start_y, color):
         fl_width, fl_height = get_text_dimensions(line["content"][0], fl_font)
 
         current_y -= fl_height
-        
-        draw.text(
-            (x, current_y),
-            line["content"][0],
-            color,
-            fl_font
-        )
+
+        draw.text((x, current_y), line["content"][0], color, fl_font)
 
         draw.text(
             (x + fl_width, current_y + (fl_font_size - font_size)),
             line["content"][1:],
             color,
-            font
+            font,
         )
 
         current_y += -10
+
 
 def subject_to_artwork(subject):
     """Generate artwork from subject"""
@@ -55,20 +52,10 @@ def subject_to_artwork(subject):
 
     for subject_line in subject_lines(subject, 1, 1500, 1000):
         lines.append(subject_line)
-    
-    lines.append(
-        {
-            "content": message,
-            "size": 0.4
-        }
-    )
 
-    draw_lines(
-        lines,
-        x,
-        start_y,
-        color
-    )
+    lines.append({"content": message, "size": 0.4})
+
+    draw_lines(lines, x, start_y, color)
 
     image = BytesIO()
     im.save(image, "PNG")

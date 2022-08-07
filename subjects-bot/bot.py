@@ -15,6 +15,7 @@ from utils import config
 intents = discord.Intents.default()
 intents.message_content = True
 
+
 class SubjectsBot(commands.Bot):
     """The main bot class."""
 
@@ -30,7 +31,7 @@ class SubjectsBot(commands.Bot):
         super().__init__(
             command_prefix=prefix,
             intents=intents,
-            help_command=SimplePrettyHelp(color=color)
+            help_command=SimplePrettyHelp(color=color),
         )
 
         self.guild_id = guild_id
@@ -54,7 +55,7 @@ class SubjectsBot(commands.Bot):
         image = artwork.subject_banner(message, todays_subject)
 
         await channel.send(file=discord.File(fp=image, filename="subject.jpg"))
-    
+
     def reschedule_job(self):
         """Reschedules the job, to be ran after a change of interval."""
 

@@ -7,6 +7,7 @@ from exceptions import WordNotInDictionaryError
 
 dict_ = []
 
+
 def init():
     """Parse dictionary"""
 
@@ -20,7 +21,7 @@ def init():
 
         if elem.tag == "pos":
             pos = elem.get("name")
-        
+
         if pos in ("noun", "adj"):
 
             if elem.tag == "form":
@@ -31,13 +32,14 @@ def init():
                     gender = elem.get("value")[0]
                 elif elem.get("name") == "number":
                     number = elem.get("value")[0]
-            
+
             if elem.tag == "inflected":
                 entry[f"{gender}{number}"] = form
-            
+
             if elem.tag == "entry":
                 dict_.append(entry)
                 entry = {}
+
 
 def get_word_attrs(word):
     """Get noun gender and number"""
@@ -48,6 +50,7 @@ def get_word_attrs(word):
                 return form
     raise WordNotInDictionaryError
 
+
 def inflect_word(word, form):
     """Get adjective in a specific form"""
 
@@ -56,5 +59,6 @@ def inflect_word(word, form):
             if entry[form_] == word:
                 return entry[form]
     raise WordNotInDictionaryError
+
 
 init()

@@ -15,15 +15,14 @@ prefix = env.get("PREFIX")
 
 color = config.get("color")
 
-bot = SubjectsBot(
-    guild_id,
-    role_id,
-    prefix,
-    color
-)
+bot = SubjectsBot(guild_id, role_id, prefix, color)
 
 scheduler = AsyncIOScheduler()
-scheduler.add_job(bot.send_subject, CronTrigger.from_crontab(config.get("interval")), id="send_subject")
+scheduler.add_job(
+    bot.send_subject,
+    CronTrigger.from_crontab(config.get("interval")),
+    id="send_subject",
+)
 scheduler.start()
 
 bot.run(token)

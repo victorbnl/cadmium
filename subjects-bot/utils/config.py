@@ -8,8 +8,10 @@ from exceptions import *
 with open("data/config.yml", "r") as file_:
     config = yaml.safe_load(file_) or {}
 
+
 def get_config():
     return config
+
 
 def get(keys, dict_=config):
     """Get config item"""
@@ -19,6 +21,7 @@ def get(keys, dict_=config):
         return get(rest, dict_[key])
     else:
         return dict_[keys]
+
 
 def set(keys, item, dict_=config):
     """Set config item"""
