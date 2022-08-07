@@ -14,6 +14,8 @@ from utils import config
 
 
 class Config(commands.Cog, name="Administration", description="Administrer le bot"):
+    """Set or get configuration parameters."""
+    
     @commands.command(brief="Met à jour le bot")
     async def update(self, ctx):
         """Updates the bot."""

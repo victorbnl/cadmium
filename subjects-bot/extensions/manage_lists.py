@@ -8,6 +8,8 @@ import yaml
 
 
 class ManageLists(commands.Cog, name="Gérer les listes"):
+    """Add, remove or list items from the word lists."""
+
     @commands.command(
         brief="Ajoute un mot à une liste",
         extras={
