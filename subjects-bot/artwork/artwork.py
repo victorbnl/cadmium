@@ -1,5 +1,6 @@
 """Generates a banner for a subject."""
 
+import os
 from io import BytesIO
 from PIL import Image, ImageDraw
 
@@ -41,7 +42,8 @@ def subject_banner(message, subject):
 
     subject = subject.title()
 
-    im = Image.open("artwork/assets/img/background.jpg")
+    path = os.path.join(os.path.dirname(__file__), "assets/img/background.jpg")
+    im = Image.open(path)
     width, height = im.size
 
     draw = ImageDraw.Draw(im)

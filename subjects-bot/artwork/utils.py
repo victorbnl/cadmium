@@ -1,5 +1,6 @@
 """Utility functions for text drawing."""
 
+import os
 from PIL import ImageFont
 
 
@@ -32,9 +33,12 @@ def get_line_dimensions(content, size):
 def get_font(scale, variant):
     """Get ImageFont font object of desired size."""
 
-    return ImageFont.truetype(
-        f"artwork/assets/fonts/Alegreya/Alegreya-{variant}.ttf", int(147 * scale)
+    path = os.path.join(
+        os.path.dirname(__file__), "assets/fonts/Alegreya/Alegreya-{variant}.ttf"
     )
+    font = ImageFont.truetype(path.format(variant=variant), int(147 * scale))
+
+    return font
 
 
 def get_fonts(scale):
