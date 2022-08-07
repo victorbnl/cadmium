@@ -41,8 +41,6 @@ def change_verb_prob(inc):
 def get_subject():
     """Generate a random subject"""
 
-    global verb_prob
-
     subject = []
 
     is_verb = pr.Prob(float(config.get("probs.verb")))
