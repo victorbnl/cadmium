@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 from typing import Literal
 
-import yaml
+from subjects_bot.utils.lists import lists
 
 
 class ManageLists(commands.Cog, name="Gérer les listes"):
@@ -14,33 +14,24 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         brief="Ajoute un mot à une liste",
         extras={
             "args": {
-                "type": 'nature ("noun", "adjective", "verb", "adverb")',
+                "type": 'nature ("noun", "adjectives", "verbs", "adverbs")',
                 "args": "mots à ajouter",
             }
         },
     )
     async def add(
-        self, ctx, type: Literal["noun", "adjective", "verb", "adverb"], *args: str
+        self, ctx, type: Literal["nouns", "adjectives", "verbs", "adverbs"], *words: str
     ):
         """Adds a word to a list."""
 
-        # Read word list
-        with open(f"data/lists/{type}s.yml", "r+") as file_:
-            items = yaml.safe_load(file_) or []
-
-            # Append each word to items
-            for arg in args:
-                items.append(arg)
-
-            # Write the new list
-            file_.seek(0)
-            file_.write(yaml.dump(items, allow_unicode=True))
-            file_.truncate()
+        # Add each word into the list
+        for word in words:
+            lists[type].add(word)
 
         # Send what has been done
         await ctx.send(
             embed=discord.Embed(
-                description=f"Ajouté·s à la liste {type}s : {', '.join(f'`{arg}`' for arg in args)}"
+                description=f"Ajouté·s à la liste {type} : {', '.join(f'`{word}`' for word in words)}"
             )
         )
 
@@ -49,52 +40,42 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         brief="Retire un mot d'une liste",
         extras={
             "args": {
-                "type": 'nature ("noun", "adjective", "verb", "adverb")',
+                "type": 'nature ("nouns", "adjectives", "verbs", "adverbs")',
                 "args": "mots à retirer",
             }
         },
     )
     async def remove(
-        self, ctx, type: Literal["noun", "adjective", "verb", "adverb"], *args: str
+        self, ctx, type: Literal["nouns", "adjectives", "verbs", "adverbs"], *words: str
     ):
         """Removes a word from a list."""
 
-        # Read word list
-        with open(f"data/lists/{type}s.yml", "r+") as file_:
-            items = yaml.safe_load(file_) or []
-
-            # Remove each word
-            for arg in args:
-                items.remove(arg)
-
-            # Write the new list
-            file_.seek(0)
-            file_.write(yaml.dump(items, allow_unicode=True))
-            file_.truncate()
+        # Remove each word from the list
+        for word in words:
+            lists[type].remove(word)
 
         # Send what has been done
         await ctx.send(
             embed=discord.Embed(
-                description=f"Retiré·s de la liste *{type}s* : {', '.join(f'`{arg}`' for arg in args)}"
+                description=f"Retiré·s de la liste *{type}* : {', '.join(f'`{word}`' for word in words)}"
             )
         )
 
     @commands.command(
         aliases=["ls"],
         brief="Affiche les mots d'une liste",
-        extras={"args": {"type": 'nature ("noun", "adjective", "verb", "adverb")'}},
+        extras={"args": {"type": 'nature ("nouns", "adjectives", "verbs", "adverbs")'}},
     )
-    async def list(self, ctx, type: Literal["noun", "adjective", "verb", "adverb"]):
+    async def list(self, ctx, type: Literal["nouns", "adjectives", "verbs", "adverbs"]):
         """List the words of a list."""
 
         # Read items
-        with open(f"data/lists/{type}s.yml", "r") as file_:
-            items = yaml.safe_load(file_) or []
+        items = lists[type].items
 
         # Send them
         await ctx.send(
             embed=discord.Embed(
-                title=f"{type.capitalize()}s",
+                title=f"{type.capitalize()}",
                 description=", ".join(f"`{item}`" for item in items),
             )
         )

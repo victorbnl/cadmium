@@ -8,6 +8,7 @@ from subjects_bot.inflect import Inflect
 from subjects_bot.exceptions import *
 
 from subjects_bot.utils import config
+from subjects_bot.utils.lists import lists
 
 inflect = Inflect()
 
@@ -48,18 +49,22 @@ def get_subject():
     # Verb
     if is_verb:
         change_verb_prob(False)
-        subject.append(random.choice(items["verb"]))
+
+        verb = lists["verbs"].get_random()
+        subject.append(verb)
 
         # Adverb
         add_adverb = pr.Prob(float(config.get("probs.adverb")))
         if add_adverb:
-            subject.append(random.choice(items["adverb"]))
+
+            adverb = lists["adverbs"].get_random()
+            subject.append(adverb)
 
     # Noun
     else:
         change_verb_prob(True)
 
-        noun = random.choice(items["noun"])
+        noun = lists["nouns"].get_random()
         subject.append(noun)
 
         # Adjective
@@ -70,8 +75,7 @@ def get_subject():
             except WordNotInDictionaryError:
                 form = "ms"
 
-            adjectives = items["adjective"]
-            adjective = random.choice(adjectives)
+            adjective = lists["adjectives"].get_random()
             try:
                 inflected_adj = inflect.inflect_word(adjective, form)
             except WordNotInDictionaryError:
@@ -79,14 +83,14 @@ def get_subject():
 
             subject.append(inflected_adj)
 
-            second_adjectives = adjectives
+            second_adjectives = lists["adjectives"].items
             second_adjectives.remove(adjective)
 
             # Second adjective
             add_second_adjective = pr.Prob(float(config.get("probs.second_adjective")))
             if add_second_adjective:
 
-                second_adjective = random.choice(adjectives)
+                second_adjective = random.choice(second_adjectives)
                 try:
                     inflected_second_adj = inflect.inflect_word(second_adjective, form)
                 except WordNotInDictionaryError:
