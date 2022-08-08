@@ -4,6 +4,7 @@ import discord
 
 from subjects_bot.i18n import i18n
 
+
 async def on_command_error(ctx, error):
     """Command error handler"""
 

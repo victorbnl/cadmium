@@ -14,7 +14,11 @@ from subjects_bot.i18n import i18n
 from subjects_bot.utils import config
 
 
-class Config(commands.Cog, name=i18n("cogs.admin.name"), description=i18n("cogs.admin.description")):
+class Config(
+    commands.Cog,
+    name=i18n("cogs.admin.name"),
+    description=i18n("cogs.admin.description"),
+):
     """Set or get configuration parameters."""
 
     @commands.command(brief=i18n("commands.update.brief"))
@@ -64,19 +68,13 @@ class Config(commands.Cog, name=i18n("cogs.admin.name"), description=i18n("cogs.
         elif value is None:
             value = config.get(key)
 
-            message = i18n("messages.config_item_is", {
-                "key": key,
-                "value": value
-            })
+            message = i18n("messages.config_item_is", {"key": key, "value": value})
 
         # Both key and value are set -> set config parameter
         else:
             config.set(key, value)
 
-            message = i18n("messages.config_item_set_to", {
-                "key": key,
-                "value": value
-            })
+            message = i18n("messages.config_item_set_to", {"key": key, "value": value})
 
         # Send what has been done
         await ctx.send(embed=discord.Embed(description=message))
@@ -86,9 +84,9 @@ class Config(commands.Cog, name=i18n("cogs.admin.name"), description=i18n("cogs.
         """Manually reschedules the job after an interval change."""
 
         ctx.bot.reschedule_job()
-        await ctx.send(i18n("messages.rescheduled_to", {
-            "interval": config.get("interval")
-        }))
+        await ctx.send(
+            i18n("messages.rescheduled_to", {"interval": config.get("interval")})
+        )
 
     @commands.command(brief=i18n("commands.trigger.brief"))
     async def trigger(self, ctx):

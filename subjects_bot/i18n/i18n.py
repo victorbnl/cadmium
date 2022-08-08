@@ -8,7 +8,9 @@ lang = "fr"
 with open(os.path.join(os.path.dirname(__file__), f"strings/{lang}.yml")) as file_:
     strings = yaml.safe_load(file_)
 
+
 def i18n(string, vars={}):
+    """Get i18n string."""
 
     def get(keys, dict_=strings):
         if "." in keys:

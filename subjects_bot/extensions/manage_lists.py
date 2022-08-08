@@ -7,6 +7,7 @@ from typing import Literal
 from subjects_bot.utils.lists import lists
 from subjects_bot.i18n import i18n
 
+
 class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
     """Add, remove or list items from the word lists."""
 
@@ -31,10 +32,10 @@ class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
         # Send what has been done
         await ctx.send(
             embed=discord.Embed(
-                description=i18n("messages.added", {
-                    "list": type,
-                    "words": ', '.join(f'`{word}`' for word in words)
-                })
+                description=i18n(
+                    "messages.added",
+                    {"list": type, "words": ", ".join(f"`{word}`" for word in words)},
+                )
             )
         )
 
@@ -60,17 +61,21 @@ class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
         # Send what has been done
         await ctx.send(
             embed=discord.Embed(
-                description=i18n("messages.removed", {
-                    "list": type,
-                    "words": ', '.join(f'`{word}`' for word in words)
-                })
+                description=i18n(
+                    "messages.removed",
+                    {"list": type, "words": ", ".join(f"`{word}`" for word in words)},
+                )
             )
         )
 
     @commands.command(
         aliases=["ls"],
         brief=i18n("commands.list.brief"),
-        extras={"args": {"type": f'{i18n("commands.list.args.type")} ("nouns", "adjectives", "verbs", "adverbs")'}},
+        extras={
+            "args": {
+                "type": f'{i18n("commands.list.args.type")} ("nouns", "adjectives", "verbs", "adverbs")'
+            }
+        },
     )
     async def list(self, ctx, type: Literal["nouns", "adjectives", "verbs", "adverbs"]):
         """List the words of a list."""

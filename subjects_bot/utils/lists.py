@@ -3,14 +3,14 @@
 import yaml
 import random
 
-class List():
 
+class List:
     def __init__(self, type):
         self.type = type
 
         with open(f"data/lists/{self.type}.yml", "r") as file_:
             self.items = yaml.safe_load(file_)
-    
+
     def get_random(self):
         """Get a random noun from the list."""
 
@@ -21,9 +21,9 @@ class List():
 
         if word not in self.items:
             self.items.append(word)
-        
+
         self.write_list()
-    
+
     def remove(self, word):
         """Remove a word from the list."""
 
@@ -36,6 +36,7 @@ class List():
 
         with open(f"data/{self.type}.yml", "w") as file_:
             file_.write(yaml.dump(self.items, allow_unicode=True))
+
 
 lists = {}
 for type in ["adjectives", "adverbs", "nouns", "verbs"]:
