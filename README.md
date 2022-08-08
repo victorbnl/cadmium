@@ -13,4 +13,4 @@ Discord bot for the french server *Un sujet par jour*.
 - Copy the files from the `samples/` folder and
     - Set the required variables in `.env`
     - Complete `data/config.yml`
-- Run the bot: `python3 subjects-bot`
+- Run the bot: `python3 -m subjects_bot`
