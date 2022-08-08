@@ -79,7 +79,8 @@ def get_subject():
 
             subject.append(inflected_adj)
 
-            adjectives.remove(adjective)
+            second_adjectives = adjectives
+            second_adjectives.remove(adjective)
 
             # Second adjective
             add_second_adjective = pr.Prob(float(config.get("probs.second_adjective")))
