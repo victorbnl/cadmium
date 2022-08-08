@@ -9,30 +9,32 @@ import discord
 from discord.ext import commands
 
 from subjects_bot.exceptions import *
+from subjects_bot.i18n import i18n
+
 from subjects_bot.utils import config
 
 
-class Config(commands.Cog, name="Administration", description="Administrer le bot"):
+class Config(commands.Cog, name=i18n("cogs.admin.name"), description=i18n("cogs.admin.description")):
     """Set or get configuration parameters."""
 
-    @commands.command(brief="Met à jour le bot")
+    @commands.command(brief=i18n("commands.update.brief"))
     async def update(self, ctx):
         """Updates the bot."""
 
         if os.path.exists("update.sh"):
-            await ctx.send(embed=discord.Embed(description="Mise à jour du bot"))
+            await ctx.send(embed=discord.Embed(description=i18n("messages.updating")))
             subprocess.run(["./update.sh"])
             exit(0)
 
         else:
-            raise MissingUpdateScriptError("Script de mise à jour manquant")
+            raise MissingUpdateScriptError(i18n("messages.missing_update_script"))
 
     @commands.command(
-        brief="Définir ou afficher des paramètres de configuration",
+        brief=i18n("commands.config.brief"),
         extras={
             "args": {
-                "key": "propriété (utiliser des points pour les props imbriquées)",
-                "value": "valeur sur laquelle la configurer",
+                "key": i18n("commands.config.args.key"),
+                "value": i18n("commands.config.args.value"),
             }
         },
     )
@@ -61,24 +63,34 @@ class Config(commands.Cog, name="Administration", description="Administrer le bo
         # Value is None but key is not -> getting config parameter
         elif value is None:
             value = config.get(key)
-            message = f"{key.capitalize()} est {value}"
+
+            message = i18n("messages.config_item_is", {
+                "key": key,
+                "value": value
+            })
 
         # Both key and value are set -> set config parameter
         else:
             config.set(key, value)
-            message = f"{key.capitalize()} a été défini sur {value}"
+
+            message = i18n("messages.config_item_set_to", {
+                "key": key,
+                "value": value
+            })
 
         # Send what has been done
         await ctx.send(embed=discord.Embed(description=message))
 
-    @commands.command(brief="Relancer le scheduler après un changement d'intervalle")
+    @commands.command(brief=i18n("commands.reschedule.brief"))
     async def reschedule(self, ctx):
         """Manually reschedules the job after an interval change."""
 
         ctx.bot.reschedule_job()
-        await ctx.send(f"Envoi reprogrammé à {config.get('interval')}")
+        await ctx.send(i18n("messages.rescheduled_to", {
+            "interval": config.get("interval")
+        }))
 
-    @commands.command(brief="Lancer manuellement la génération d'un sujet")
+    @commands.command(brief=i18n("commands.trigger.brief"))
     async def trigger(self, ctx):
         """Manually starts sending a subject."""
 

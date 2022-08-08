@@ -5,17 +5,17 @@ from discord.ext import commands
 from typing import Literal
 
 from subjects_bot.utils.lists import lists
+from subjects_bot.i18n import i18n
 
-
-class ManageLists(commands.Cog, name="Gérer les listes"):
+class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
     """Add, remove or list items from the word lists."""
 
     @commands.command(
-        brief="Ajoute un mot à une liste",
+        brief=i18n("commands.add.brief"),
         extras={
             "args": {
-                "type": 'nature ("noun", "adjectives", "verbs", "adverbs")',
-                "args": "mots à ajouter",
+                "type": f'{i18n("commands.add.args.type")} ("noun", "adjectives", "verbs", "adverbs")',
+                "words": i18n("commands.add.args.words"),
             }
         },
     )
@@ -31,17 +31,20 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         # Send what has been done
         await ctx.send(
             embed=discord.Embed(
-                description=f"Ajouté·s à la liste {type} : {', '.join(f'`{word}`' for word in words)}"
+                description=i18n("messages.added", {
+                    "list": type,
+                    "words": ', '.join(f'`{word}`' for word in words)
+                })
             )
         )
 
     @commands.command(
         aliases=["rm"],
-        brief="Retire un mot d'une liste",
+        brief=i18n("commands.remove.brief"),
         extras={
             "args": {
-                "type": 'nature ("nouns", "adjectives", "verbs", "adverbs")',
-                "args": "mots à retirer",
+                "type": f'{i18n("commands.remove.args.type")} ("nouns", "adjectives", "verbs", "adverbs")',
+                "words": i18n("commands.remove.args.words"),
             }
         },
     )
@@ -57,14 +60,17 @@ class ManageLists(commands.Cog, name="Gérer les listes"):
         # Send what has been done
         await ctx.send(
             embed=discord.Embed(
-                description=f"Retiré·s de la liste *{type}* : {', '.join(f'`{word}`' for word in words)}"
+                description=i18n("messages.removed", {
+                    "list": type,
+                    "words": ', '.join(f'`{word}`' for word in words)
+                })
             )
         )
 
     @commands.command(
         aliases=["ls"],
-        brief="Affiche les mots d'une liste",
-        extras={"args": {"type": 'nature ("nouns", "adjectives", "verbs", "adverbs")'}},
+        brief=i18n("commands.list.brief"),
+        extras={"args": {"type": f'{i18n("commands.list.args.type")} ("nouns", "adjectives", "verbs", "adverbs")'}},
     )
     async def list(self, ctx, type: Literal["nouns", "adjectives", "verbs", "adverbs"]):
         """List the words of a list."""
