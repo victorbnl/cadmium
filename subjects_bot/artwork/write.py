@@ -2,8 +2,8 @@ from PIL import ImageDraw
 
 from subjects_bot.artwork.utils import *
 
-class Write():
-    
+
+class Write:
     def __init__(self, image):
         self.draw = ImageDraw.Draw(image)
 

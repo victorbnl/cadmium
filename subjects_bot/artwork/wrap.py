@@ -35,9 +35,7 @@ def subject_lines(subject, size, first_line_max_width, second_line_max_width):
             second_line_width = get_line_dimensions(" ".join(second_line), nsize)[0]
 
         # Return formatted lines with new text size
-        return [
-            Line(" ".join(l), nsize) for l in [first_line, second_line]
-        ]
+        return [Line(" ".join(l), nsize) for l in [first_line, second_line]]
 
     # If subject is not too large
     else:

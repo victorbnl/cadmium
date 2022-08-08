@@ -10,6 +10,7 @@ from subjects_bot.artwork.write import Write
 from subjects_bot.artwork.utils import *
 from subjects_bot.artwork.wrap import *
 
+
 def subject_banner(message, subject):
     """Generate artwork from subject"""
 
@@ -20,7 +21,7 @@ def subject_banner(message, subject):
     path = os.path.join(os.path.dirname(__file__), "assets/img/background.jpg")
     im = Image.open(path)
     width, height = im.size
-    
+
     # Get write object
     write = Write(im)
 

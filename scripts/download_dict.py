@@ -6,7 +6,7 @@ url = "http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/dela-fr-p
 
 resp = urlopen(url)
 
-zipfile = ZipFile(BytesIO(resp.read()), 'r')
+zipfile = ZipFile(BytesIO(resp.read()), "r")
 
 with open("dict.xml", "wb") as file_:
     file_.write(zipfile.open("dela-fr-public-u8.dic.xml").read())
