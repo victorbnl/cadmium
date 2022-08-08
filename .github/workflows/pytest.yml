@@ -24,9 +24,9 @@ jobs:
         shell: bash
         run: pip install -r requirements.txt
 
-      - name: Install pytest
+      - name: Install dev requirements
         shell: bash
-        run: pip install pytest
+        run: pip install -r dev-requirements.txt
       
       - name: Download dictionary
         shell: bash
