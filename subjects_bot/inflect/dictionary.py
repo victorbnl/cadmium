@@ -3,7 +3,7 @@ import sqlite3
 class Dictionary():
 
     def __init__(self):
-        self.con = sqlite3.connect("dictionary.db")
+        self.con = sqlite3.connect("data/dictionary.db")
         self.cur = self.con.cursor()
 
     def create_tables(self):

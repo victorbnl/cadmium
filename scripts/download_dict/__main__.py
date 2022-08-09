@@ -2,12 +2,15 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 from io import BytesIO
 
-from subjects_bot.inflect.dictionary.database import Database
+from subjects_bot.inflect.dictionary import Dictionary
 
 from scripts.download_dict.xml import xml_to_dict
 
 def download():
     """Download dictionary into db"""
+
+    # Message
+    print("Download and parsing the dictionary. This may take some time...")
 
     # Download XML file
     url = "http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/dela-fr-public-u8-xml.zip"
@@ -19,7 +22,7 @@ def download():
     dictionary = xml_to_dict(xmlfile)
 
     # Setup database
-    db = Database()
+    db = Dictionary()
     db.create_tables()
 
     # Add entries
