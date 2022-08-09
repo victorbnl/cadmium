@@ -1,8 +1,8 @@
-from lxml import etree
+from lxml.etree import iterparse
 
-from subjects_bot.inflect.classes import *
+from scripts.download_dict.classes import *
 
-def load_dict():
+def xml_to_dict(xml):
     """Get deserialized XML dictionary."""
 
     # Variables
@@ -14,7 +14,7 @@ def load_dict():
     lemma = pos = None
 
     # Walk XML
-    context = etree.iterparse("dict.xml", events=("end",), encoding="utf-8")
+    context = iterparse(xml, events=("end",))
     for _, elem in context:
 
         # Lemma
@@ -55,17 +55,20 @@ def load_dict():
         # Inflected
         if elem.tag == "inflected":
 
-            # Add inflection to list
-            inflections.append(Inflected(
-                form,
-                gender,
-                tense,
-                person,
-                number
-            ))
+            # If it's a noun, and adjective or a past participle verb
+            if pos in ("noun", "adj") or (pos == "verb" and tense == "ppast"):
 
-            # Reset inflected variables
-            form = tense = gender = number = person = None
+                # Add inflection to list
+                inflections.append(Inflected(
+                    form,
+                    gender,
+                    tense,
+                    person,
+                    number
+                ))
+
+                # Reset inflected variables
+                form = tense = gender = number = person = None
 
         # Entry
         if elem.tag == "entry":
