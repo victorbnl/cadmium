@@ -24,8 +24,9 @@ class Subject:
                 string.append(self.noun)
 
             # Append adjectives
-            if self.adjectives:
-                string.extend(self.adjectives)
+            for adjective in self.adjectives:
+                if adjective:
+                    string.append(adjective)
 
         # Verb type
         elif self.type == "verb":

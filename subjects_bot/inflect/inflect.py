@@ -14,11 +14,9 @@ def inflect_subject(subject):
         for i in range(len(subject.adjectives)):
             adjective = subject.adjectives[i]
 
-            try:
+            if subject.adjectives[i]:
                 subject.adjectives[i] = dictionary.inflect_adjective(
                     adjective, gender, number
                 )
-            except (WordNotFound, InflectionNotFound):
-                pass
 
     return subject
