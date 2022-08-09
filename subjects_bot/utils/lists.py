@@ -1,43 +1,40 @@
-"""Manage or use lists."""
+from peewee import *
 
-import yaml
 import random
 
+db = SqliteDatabase("data/words.db")
 
-class List:
-    def __init__(self, type):
-        self.type = type
+class Word(Model):
+    word = CharField()
 
-        with open(f"data/lists/{self.type}.yml", "r") as file_:
-            self.items = yaml.safe_load(file_)
+    @classmethod
+    def get_random(cls):
+        return random.choice(list(
+            cls.select()
+        )).word
+    
+    @classmethod
+    def add(cls, word):
+        cls.create(word=word)
+    
+    @classmethod
+    def remove(cls, word):
+        cls.delete().where(cls.word == word).execute()
+    
+    class Meta:
+        database = db
 
-    def get_random(self):
-        """Get a random noun from the list."""
+class Noun(Word):
+    pass
 
-        return random.choice(self.items)
+class Adjective(Word):
+    pass
 
-    def add(self, word):
-        """Add a noun to the list."""
+class Verb(Word):
+    pass
 
-        if word not in self.items:
-            self.items.append(word)
+class Adverb(Word):
+    pass
 
-        self.write_list()
-
-    def remove(self, word):
-        """Remove a word from the list."""
-
-        self.items.remove(word)
-
-        self.write_list()
-
-    def write_list(self):
-        """Write the list on the disk."""
-
-        with open(f"data/{self.type}.yml", "w") as file_:
-            file_.write(yaml.dump(self.items, allow_unicode=True))
-
-
-lists = {}
-for type in ["adjectives", "adverbs", "nouns", "verbs"]:
-    lists[type] = List(type)
+if __name__ == "__main__":
+    print(Noun.get_random())

@@ -3,7 +3,7 @@
 from PyProbs import Probability
 
 from subjects_bot.utils import config
-from subjects_bot.utils.lists import lists
+from subjects_bot.utils import lists
 
 from subjects_bot.subject.classes import Subject
 
@@ -19,7 +19,14 @@ def prob(nature):
 def get_word(list_):
     """Get a random word from a list."""
 
-    return lists[list_].get_random()
+    if list_ == "nouns":
+        return lists.Noun.get_random()
+    elif list_ == "adjectives":
+        return lists.Adjective.get_random()
+    elif list_ == "verbs":
+        return lists.Verb.get_random()
+    elif list_ == "adverbs":
+        return lists.Adverb.get_random()
 
 
 def get_subject():
