@@ -8,7 +8,7 @@ class Subject:
     noun: str = None
     verb: str = None
     adverb: str = None
-    adjectives: list[str] = None
+    adjectives: List[str] = None
 
     def to_string(self):
         """Returns the subject as a string."""

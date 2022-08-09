@@ -15,8 +15,8 @@ class Entry:
     lemma: str
     pos: Literal['noun', 'adj', 'adverb', 'verb']
     compound: Optional[Literal['comp']]
-    inflections: list[Inflected]
+    inflections: List[Inflected]
 
 @dataclass
 class Dict:
-    entries: list[Entry]
+    entries: List[Entry]
