@@ -10,9 +10,7 @@ from apscheduler.triggers.cron import CronTrigger
 
 from subjects_bot.utils import config
 
-from subjects_bot.subject import subject
-from subjects_bot import inflect
-from subjects_bot import artwork
+from subjects_bot.get_subject import get_subject
 
 # Intents required for interacting with messages
 intents = discord.Intents.default()
@@ -43,7 +41,7 @@ class SubjectsBot(commands.Bot):
         self.add_check(self.block_other_guilds_check)
 
         # Load extensions (cogs)
-        for ext in ("manage_lists", "admin", "error"):
+        for ext in ("manage_lists", "admin", "error", "test"):
             self.load_extension(f"subjects_bot.extensions.{ext}")
             print(f"Loaded extension {ext}")
 
@@ -54,16 +52,7 @@ class SubjectsBot(commands.Bot):
         channel_id = int(config.get("channel").replace("<#", "").replace(">", ""))
         channel = self.get_channel(channel_id)
 
-        # Message and subject
-        message = config.get("message")
-        todays_subject = subject.get_subject()
-        # Inflections (make adjectives agree with nouns)
-        todays_subject = inflect.inflect_subject(todays_subject)
-        # Format it
-        todays_subject = todays_subject.to_string()
-
-        # Get banner with the subject
-        image = artwork.subject_banner(message, todays_subject)
+        image = get_subject()
 
         # Send subject
         await channel.send(file=discord.File(fp=image, filename="subject.jpg"))
