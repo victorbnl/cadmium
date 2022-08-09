@@ -3,6 +3,7 @@ from subjects_bot import subject
 from subjects_bot import inflect
 from subjects_bot import artwork
 
+
 def get_subject():
     """Returns the final form of the subject: a banner image."""
 
