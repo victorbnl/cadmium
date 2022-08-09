@@ -13,20 +13,13 @@ probs = config.get("probs")
 def prob(nature):
     """Determine nature and existence of word according to defined probabilities."""
 
-    return Probability.Prob(probs[nature])
+    return Probability.Prob(float(probs[nature]))
 
 
 def get_word(list_):
     """Get a random word from a list."""
-
-    if list_ == "nouns":
-        return lists.Noun.get_random()
-    elif list_ == "adjectives":
-        return lists.Adjective.get_random()
-    elif list_ == "verbs":
-        return lists.Verb.get_random()
-    elif list_ == "adverbs":
-        return lists.Adverb.get_random()
+    
+    return lists.lists[list_].get_random()
 
 
 def change_verb_prob(factor):
