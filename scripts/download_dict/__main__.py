@@ -11,7 +11,7 @@ def download():
     """Download dictionary into db"""
 
     # Message
-    print("Download and parsing the dictionary. This may take some time...")
+    print("Downloading and parsing the dictionary. This may take some time...")
 
     # Download XML file
     url = "http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/dela-fr-public-u8-xml.zip"
