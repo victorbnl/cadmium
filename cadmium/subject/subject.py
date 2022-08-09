@@ -2,10 +2,10 @@
 
 from PyProbs import Probability
 
-from subjects_bot.utils import config
-from subjects_bot.utils import lists
+from cadmium.utils import config
+from cadmium.utils import lists
 
-from subjects_bot.subject.classes import Subject
+from cadmium.subject.classes import Subject
 
 probs = config.get("probs")
 

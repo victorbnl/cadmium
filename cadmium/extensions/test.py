@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from subjects_bot.get_subject import get_subject
+from cadmium.get_subject import get_subject
 
 
 class Test(commands.Cog):

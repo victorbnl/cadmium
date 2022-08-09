@@ -8,10 +8,10 @@ import os.path
 import discord
 from discord.ext import commands
 
-from subjects_bot.exceptions import *
-from subjects_bot.i18n import i18n
+from cadmium.exceptions import *
+from cadmium.i18n import i18n
 
-from subjects_bot.utils import config
+from cadmium.utils import config
 
 
 class Config(

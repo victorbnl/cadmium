@@ -4,8 +4,8 @@ import discord
 from discord.ext import commands
 from typing import Literal
 
-from subjects_bot.utils.lists import lists
-from subjects_bot.i18n import i18n
+from cadmium.utils.lists import lists
+from cadmium.i18n import i18n
 
 
 class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):

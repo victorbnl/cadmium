@@ -1,7 +1,7 @@
-from subjects_bot.utils import config
-from subjects_bot import subject
-from subjects_bot import inflect
-from subjects_bot import artwork
+from cadmium.utils import config
+from cadmium import subject
+from cadmium import inflect
+from cadmium import artwork
 
 
 def get_subject():

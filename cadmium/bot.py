@@ -8,16 +8,16 @@ from discord_simple_pretty_help import SimplePrettyHelp
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from subjects_bot.utils import config
+from cadmium.utils import config
 
-from subjects_bot.get_subject import get_subject
+from cadmium.get_subject import get_subject
 
 # Intents required for interacting with messages
 intents = discord.Intents.default()
 intents.message_content = True
 
 
-class SubjectsBot(commands.Bot):
+class Cadmium(commands.Bot):
     """The main bot class."""
 
     async def block_other_guilds_check(self, ctx):
@@ -42,7 +42,7 @@ class SubjectsBot(commands.Bot):
 
         # Load extensions (cogs)
         for ext in ("manage_lists", "admin", "error", "test"):
-            self.load_extension(f"subjects_bot.extensions.{ext}")
+            self.load_extension(f"cadmium.extensions.{ext}")
             print(f"Loaded extension {ext}")
 
     async def send_subject(self):

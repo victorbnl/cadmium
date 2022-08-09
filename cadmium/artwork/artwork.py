@@ -4,11 +4,11 @@ import os
 from io import BytesIO
 from PIL import Image
 
-from subjects_bot.artwork.data.line import Line
-from subjects_bot.artwork.write import Write
+from cadmium.artwork.data.line import Line
+from cadmium.artwork.write import Write
 
-from subjects_bot.artwork.utils import *
-from subjects_bot.artwork.wrap import *
+from cadmium.artwork.utils import *
+from cadmium.artwork.wrap import *
 
 
 def subject_banner(message, subject):

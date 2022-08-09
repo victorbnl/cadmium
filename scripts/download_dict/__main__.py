@@ -2,7 +2,7 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 from io import BytesIO
 
-from subjects_bot.inflect import dictionary
+from cadmium.inflect import dictionary
 
 from scripts.download_dict.xml import xml_to_dict
 

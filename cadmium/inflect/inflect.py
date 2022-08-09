@@ -1,6 +1,6 @@
-from subjects_bot.inflect.exceptions import InflectionNotFound, WordNotFound
+from cadmium.inflect.exceptions import InflectionNotFound, WordNotFound
 
-from subjects_bot.inflect import dictionary
+from cadmium.inflect import dictionary
 
 def inflect_subject(subject):
     """Make correct inflections on a subject."""

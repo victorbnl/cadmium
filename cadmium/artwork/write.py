@@ -1,6 +1,6 @@
 from PIL import ImageDraw
 
-from subjects_bot.artwork.utils import *
+from cadmium.artwork.utils import *
 
 
 class Write:

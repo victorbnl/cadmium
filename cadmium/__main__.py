@@ -1,7 +1,7 @@
 """Main file, starts the bot and the scheduler."""
 
-from subjects_bot.utils import env, config
-from subjects_bot.bot import SubjectsBot
+from cadmium.utils import env, config
+from cadmium.bot import Cadmium
 
 # Get environment variables
 token = env.get("TOKEN")
@@ -13,7 +13,7 @@ prefix = env.get("PREFIX")
 color = int(config.get("color"), 16)
 
 # Define bot
-bot = SubjectsBot(guild_id, role_id, prefix, color)
+bot = Cadmium(guild_id, role_id, prefix, color)
 
 # Start the bot
 bot.run(token)

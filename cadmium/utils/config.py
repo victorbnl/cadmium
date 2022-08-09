@@ -2,7 +2,7 @@
 
 import yaml
 
-from subjects_bot.exceptions import *
+from cadmium.exceptions import *
 
 # Read config file
 with open("data/config.yml", "r") as file_:
