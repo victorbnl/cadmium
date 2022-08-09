@@ -1,6 +1,6 @@
 channel: ''
 interval: ''
-message: ''
+mention: ''
 probs:
   adjective: ''
   adverb: ''
