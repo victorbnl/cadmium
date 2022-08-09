@@ -1,91 +1,56 @@
-import sqlite3
+from peewee import *
 
+db = SqliteDatabase("data/dictionary.db")
 
-class Dictionary:
-    def __init__(self):
-        self.con = sqlite3.connect("data/dictionary.db")
-        self.cur = self.con.cursor()
+class BaseModel(Model):
+    class Meta:
+        database = db
 
-    def create_tables(self):
-        """Create tables in the database."""
+class Entry(BaseModel):
+    lemma = CharField()
+    pos = CharField()
 
-        # Entry table
-        self.cur.execute(
-            """
-            CREATE TABLE entry (
-                id INTEGER PRIMARY KEY,
-                lemma TEXT,
-                pos TEXT
-            )
-        """
+    @classmethod
+    def add(cls, lemma, pos):
+        return cls.insert(lemma=lemma, pos=pos).execute()
+
+class Inflection(BaseModel):
+    entry_id = ForeignKeyField(Entry)
+    form = CharField()
+    gender = CharField(null=True)
+    number = CharField(null=True)
+
+def get_inflection(word):
+    """Get noun gender and number."""
+
+    res = (
+        Inflection
+        .select(Inflection.gender, Inflection.number)
+        .where(Inflection.form == word)
+        .get()
+    )
+
+    return {"gender": res.gender, "number": res.number}
+
+def inflect_adjective(adjective, gender, number):
+    """Inflect adjective according to gender and number."""
+
+    adjective_entry_id = (
+        Inflection
+        .select(Inflection.entry_id)
+        .where(Inflection.form == adjective)
+        .get().entry_id
+    )
+
+    return (
+        Inflection
+        .select(Inflection.form)
+        .where(
+            (Inflection.entry_id == adjective_entry_id)
+            & (Inflection.gender == gender)
+            & (Inflection.number == number)
         )
+        .get().form
+    )
 
-        # Inflection table
-        self.cur.execute(
-            """
-            CREATE TABLE inflection (
-                id INTEGER PRIMARY KEY,
-                entry_id INTEGER,
-                form TEXT NOT NULL,
-                gender TEXT,
-                number TEXT,
-                FOREIGN KEY(entry_id) REFERENCES entry(id)
-            )
-        """
-        )
-
-        self.con.commit()
-
-    def add_entry(self, lemma, pos):
-        self.cur.execute(
-            """
-            INSERT INTO entry VALUES(?, ?, ?)
-        """,
-            [None, lemma, pos],
-        )
-
-        return self.cur.lastrowid
-
-    def add_inflection(self, entry_id, form, gender=None, number=None):
-        self.cur.execute(
-            """
-            INSERT INTO inflection VALUES(?, ?, ?, ?, ?)
-        """,
-            [None, entry_id, form, gender, number],
-        )
-
-        return self.cur.lastrowid
-
-    def get_inflection(self, word):
-        res = self.cur.execute(
-            """
-            SELECT gender, number
-            FROM inflection
-            WHERE form == :word
-        """,
-            {"word": word},
-        )
-
-        gender, number = res.fetchone()
-
-        return {"gender": gender, "number": number}
-
-    def inflect_adjective(self, adjective, gender, number):
-        res = self.cur.execute(
-            """
-            SELECT target.form
-            FROM inflection
-            LEFT OUTER JOIN inflection AS target
-                ON target.entry_id == inflection.entry_id
-                AND target.gender == :gender
-                AND target.number == :number
-            LEFT OUTER JOIN entry ON entry.id == inflection.entry_id
-            WHERE inflection.form == :adjective AND entry.pos == "adj"
-        """,
-            {"gender": gender, "number": number, "adjective": adjective},
-        )
-
-        return res.fetchone()[0]
-
-    def commit(self):
-        self.con.commit()
+db.create_tables([Entry, Inflection])

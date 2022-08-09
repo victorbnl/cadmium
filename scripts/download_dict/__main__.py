@@ -2,7 +2,7 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 from io import BytesIO
 
-from subjects_bot.inflect.dictionary import Dictionary
+from subjects_bot.inflect import dictionary
 
 from scripts.download_dict.xml import xml_to_dict
 
@@ -20,27 +20,21 @@ def download():
     xmlfile = BytesIO(zipfile.open("dela-fr-public-u8.dic.xml").read())
 
     # Parse it
-    dictionary = xml_to_dict(xmlfile)
+    dictObject = xml_to_dict(xmlfile)
 
-    # Setup database
-    db = Dictionary()
-    db.create_tables()
-
-    # Add entries
-    for entry in dictionary.entries:
-        entry_id = db.add_entry(entry.lemma, entry.pos)
-
-        # Add inflections
-        for inflection in entry.inflections:
-            db.add_inflection(
-                entry_id=entry_id,
-                form=inflection.form,
-                gender=inflection.gender,
-                number=inflection.number,
-            )
-
-    # Commit changes
-    db.commit()
+    # Populate database
+    with dictionary.db.atomic():
+        # Add entries
+        for entry in dictObject.entries:
+            entry_id = dictionary.Entry.add(entry.lemma, entry.pos)
+            # Add inflections
+            for inflection in entry.inflections:
+                dictionary.Inflection.create(
+                    entry_id=entry_id,
+                    form=inflection.form,
+                    gender=inflection.gender or "a",
+                    number=inflection.number,
+                )
 
 
 if __name__ == "__main__":

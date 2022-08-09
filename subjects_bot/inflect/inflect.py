@@ -2,9 +2,6 @@ from subjects_bot.inflect.exceptions import InflectionNotFound, WordNotFound
 
 from subjects_bot.inflect import dictionary
 
-dictionary = dictionary.Dictionary()
-
-
 def inflect_subject(subject):
     """Make correct inflections on a subject."""
 
