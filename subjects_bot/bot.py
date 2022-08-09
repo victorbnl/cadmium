@@ -55,7 +55,7 @@ class SubjectsBot(commands.Bot):
         image = get_subject()
 
         # Send subject
-        await channel.send(file=discord.File(fp=image, filename="subject.jpg"))
+        await channel.send(content=config.get("mention"), file=discord.File(fp=image, filename="subject.jpg"))
 
     def reschedule_job(self):
         """Reschedules the job, to be ran after a change of interval."""
