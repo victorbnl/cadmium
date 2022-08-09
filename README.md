@@ -1,6 +1,6 @@
 <h1>Cadmium<img src=".readme/logo.png" align="right"></h1>
 
-Discord bot for the french server *La Forge Indigo*.
+Discord bot for the french server [*La Forge Indigo*](https://discord.gg/NVvpe8S52F).
 
 > **Warning**  
 > This bot is designed for the french language and probably won't work as expected with other languages due to its inflections engine
