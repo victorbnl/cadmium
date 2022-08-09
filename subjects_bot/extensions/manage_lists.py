@@ -15,7 +15,7 @@ class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
         brief=i18n("commands.add.brief"),
         extras={
             "args": {
-                "type": f'{i18n("commands.add.args.type")} ("noun", "adjectives", "verbs", "adverbs")',
+                "type": f'{i18n("commands.add.args.type")} ("nouns", "adjectives", "verbs", "adverbs")',
                 "words": i18n("commands.add.args.words"),
             }
         },
@@ -81,7 +81,7 @@ class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
         """List the words of a list."""
 
         # Read items
-        items = lists[type].items
+        items = lists[type].items()
 
         # Send them
         await ctx.send(
