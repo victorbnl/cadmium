@@ -36,5 +36,4 @@ class Verb(Word):
 class Adverb(Word):
     pass
 
-if __name__ == "__main__":
-    print(Noun.get_random())
+db.create_tables([Noun, Adjective, Verb, Adverb])
