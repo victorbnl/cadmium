@@ -29,6 +29,22 @@ def get_word(list_):
         return lists.Adverb.get_random()
 
 
+def change_verb_prob(factor):
+    """Increment or decrement verbs probabilities."""
+
+    verb_prob = float(config.get("probs.verb"))
+    step = float(config.get("probs.verb_step"))
+
+    new_verb_prob = round(verb_prob + factor * step, 1)
+
+    if new_verb_prob < 0:
+        new_verb_prob = 0
+    elif new_verb_prob > 1:
+        new_verb_prob = 1
+
+    config.set("probs.verb", new_verb_prob)
+
+
 def get_subject():
     """Generate a random subject."""
 
@@ -39,6 +55,9 @@ def get_subject():
         type = "verb"
         verb = get_word("verbs")
 
+        # Verb picked ; decrease noun prob
+        change_verb_prob(-1)
+
         # Adverb
         if prob("adverb"):
             adverb = get_word("adverbs")
@@ -47,6 +66,9 @@ def get_subject():
     else:
         type = "noun"
         noun = get_word("nouns")
+
+        # Noun picked ; decrease verb prob
+        change_verb_prob(+1)
 
         # Adjective
         if prob("adjective"):
