@@ -6,6 +6,7 @@ from subjects_bot.inflect.dictionary import Dictionary
 
 from scripts.download_dict.xml import xml_to_dict
 
+
 def download():
     """Download dictionary into db"""
 
@@ -35,11 +36,12 @@ def download():
                 entry_id=entry_id,
                 form=inflection.form,
                 gender=inflection.gender,
-                number=inflection.number
+                number=inflection.number,
             )
-    
+
     # Commit changes
     db.commit()
+
 
 if __name__ == "__main__":
     download()

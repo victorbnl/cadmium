@@ -2,6 +2,7 @@ from lxml.etree import iterparse
 
 from scripts.download_dict.classes import *
 
+
 def xml_to_dict(xml):
     """Get deserialized XML dictionary."""
 
@@ -39,7 +40,7 @@ def xml_to_dict(xml):
             # Tense
             elif elem.get("name") == "tense":
                 tense = elem.get("value")
-            
+
             # Person
             elif elem.get("name") == "person":
                 person = elem.get("value")
@@ -59,35 +60,22 @@ def xml_to_dict(xml):
             if pos in ("noun", "adj") or (pos == "verb" and tense == "ppast"):
 
                 # Add inflection to list
-                inflections.append(Inflected(
-                    form,
-                    gender,
-                    tense,
-                    person,
-                    number
-                ))
+                inflections.append(Inflected(form, gender, tense, person, number))
 
                 # Reset inflected variables
                 form = tense = gender = number = person = None
 
         # Entry
         if elem.tag == "entry":
-            
+
             # Add entry to list
-            entries.append(Entry(
-                lemma,
-                pos,
-                compound,
-                inflections
-            ))
+            entries.append(Entry(lemma, pos, compound, inflections))
 
             # Reset entry variables
             lemma = pos = None
             inflections = []
 
     # Resulting dictionary
-    dictionary = Dict(
-        entries
-    )
+    dictionary = Dict(entries)
 
     return dictionary

@@ -4,6 +4,7 @@ from subjects_bot.inflect import dictionary
 
 dictionary = dictionary.Dictionary()
 
+
 def inflect_subject(subject):
     """Make correct inflections on a subject."""
 
@@ -15,9 +16,11 @@ def inflect_subject(subject):
 
         for i in range(len(subject.adjectives)):
             adjective = subject.adjectives[i]
-            
+
             try:
-                subject.adjectives[i] = dictionary.inflect_adjective(adjective, gender, number)
+                subject.adjectives[i] = dictionary.inflect_adjective(
+                    adjective, gender, number
+                )
             except (WordNotFound, InflectionNotFound):
                 pass
 

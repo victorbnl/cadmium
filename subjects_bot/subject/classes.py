@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from typing import *
 
+
 @dataclass
 class Subject:
     type: Literal["noun", "verb"]
@@ -21,18 +22,18 @@ class Subject:
             # Append noun
             if self.noun:
                 string.append(self.noun)
-            
+
             # Append adjectives
             if self.adjectives:
                 string.extend(self.adjectives)
-        
+
         # Verb type
         elif self.type == "verb":
 
             # Append verb
             if self.verb:
                 string.append(self.verb)
-            
+
             # Append adverb
             if self.adverb:
                 string.append(self.adverb)

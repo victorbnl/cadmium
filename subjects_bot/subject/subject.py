@@ -56,10 +56,4 @@ def get_subject():
             if prob("second_adjective"):
                 second_adjective = get_word("adjectives")
 
-    return Subject(
-        type,
-        noun,
-        verb,
-        adverb,
-        adjectives=[adjective, second_adjective]
-    )
+    return Subject(type, noun, verb, adverb, adjectives=[adjective, second_adjective])
