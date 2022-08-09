@@ -8,8 +8,11 @@ from discord_simple_pretty_help import SimplePrettyHelp
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from subjects_bot import subject, artwork
 from subjects_bot.utils import config
+
+from subjects_bot.subject import subject
+from subjects_bot import inflect
+from subjects_bot import artwork
 
 # Intents required for interacting with messages
 intents = discord.Intents.default()
@@ -54,6 +57,10 @@ class SubjectsBot(commands.Bot):
         # Message and subject
         message = config.get("message")
         todays_subject = subject.get_subject()
+        # Inflections (make adjectives agree with nouns)
+        todays_subject = inflect.inflect_subject(todays_subject)
+        # Format it
+        todays_subject = todays_subject.to_string()
 
         # Get banner with the subject
         image = artwork.subject_banner(message, todays_subject)
