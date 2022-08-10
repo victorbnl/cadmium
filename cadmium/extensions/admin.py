@@ -49,7 +49,7 @@ class Config(
 
         # Key is none -> getting full configuration
         if key is None:
-            configuration = config.get_config()
+            configuration = config.to_dict()
 
             def walk_conf(dict_=configuration, i=0, opts=[]):
                 for key in dict_:

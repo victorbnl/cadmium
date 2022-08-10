@@ -2,6 +2,7 @@ from cadmium.inflect.exceptions import InflectionNotFound, WordNotFound
 
 from cadmium.inflect import dictionary
 
+
 def inflect_subject(subject):
     """Make correct inflections on a subject."""
 

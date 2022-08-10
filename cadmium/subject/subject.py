@@ -7,26 +7,24 @@ from cadmium.utils import lists
 
 from cadmium.subject.classes import Subject
 
-probs = config.get("probs")
-
 
 def prob(nature):
     """Determine nature and existence of word according to defined probabilities."""
 
-    return Probability.Prob(float(probs[nature]))
+    return Probability.Prob(float(config.get(f"probs_{nature}")))
 
 
 def get_word(list_):
     """Get a random word from a list."""
-    
+
     return lists.lists[list_].get_random()
 
 
 def change_verb_prob(factor):
     """Increment or decrement verbs probabilities."""
 
-    verb_prob = float(config.get("probs.verb"))
-    step = float(config.get("probs.verb_step"))
+    verb_prob = float(config.get("probs_verb"))
+    step = float(config.get("probs_verb_step"))
 
     new_verb_prob = round(verb_prob + factor * step, 1)
 
@@ -35,7 +33,7 @@ def change_verb_prob(factor):
     elif new_verb_prob > 1:
         new_verb_prob = 1
 
-    config.set("probs.verb", new_verb_prob)
+    config.set("probs_verb", new_verb_prob)
 
 
 def get_subject():
