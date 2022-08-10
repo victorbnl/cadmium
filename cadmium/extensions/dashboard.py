@@ -1,3 +1,5 @@
+import discord.errors
+
 from cadmium.lists import lists
 from cadmium import config
 from cadmium.i18n import i18n
@@ -8,7 +10,19 @@ class Dashboard():
 
         self.bot = bot
         self.channel_id = int(config.get("dashboard_channel"))
-        self.message = None
+
+        # Message
+        self.message_id = None
+        # Load message id
+        try:
+            with open("data/dashboard_message_id.txt", "r") as file_:
+                id = int(file_.read())
+                # Id exists in file
+                if id:
+                    self.message_id = id
+        # No message file
+        except FileNotFoundError:
+            pass
     
     async def update(self):
 
@@ -26,14 +40,31 @@ class Dashboard():
             for lst in ('nouns', 'verbs', 'adjectives', 'adverbs')
         ))
 
-        # Update message
-        if self.message:
-            await self.message.edit(content=content)
-        else:
-            self.message = await self.bot.get_channel(self.channel_id).send(content)
+        # Get channel
+        channel = self.bot.get_channel(self.channel_id)
+
+        # Message already exists
+        if self.message_id:
+            # Get message
+            try:
+                message = await channel.fetch_message(self.message_id)
+                # Edit it
+                if message:
+                    await message.edit(content=content)
+                    return
+            except discord.errors.NotFound:
+                pass
+
+        # Message doesn't exist
+        await channel.purge()
+        # Create it
+        message = await self.bot.get_channel(self.channel_id).send(content)
+        self.message_id = message.id
+        # Save it
+        with open("data/dashboard_message_id.txt", "w") as file_:
+            file_.write(str(self.message_id))
     
     async def on_ready(self):
-        await self.bot.get_channel(self.channel_id).purge()
         await self.update()
     
     async def on_message(self, message):

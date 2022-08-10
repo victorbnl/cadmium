@@ -48,7 +48,7 @@ class Cadmium(commands.Bot):
         """Sends a subject. Function to be called at every interval and by the trigger command."""
 
         # Channel
-        channel_id = int(config.get("channel").replace("<#", "").replace(">", ""))
+        channel_id = int(config.get("channel"))
         channel = self.get_channel(channel_id)
 
         image = get_subject()
