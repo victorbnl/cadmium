@@ -20,6 +20,8 @@ class Config:
         self.message = config.get("message", "The subject is")
         self.mention = config.get("mention", "")
 
+        self.dashboard_channel = config.get("dashboard_channel")
+
         self.probs_verb = config.get("probs_verb", 0.5)
         self.probs_adverb = config.get("probs_adverb", 0.9)
         self.probs_adjective = config.get("probs_adjective", 0.8)
@@ -59,6 +61,7 @@ class Config:
             "interval",
             "message",
             "mention",
+            "dashboard_channel",
             "probs_verb",
             "probs_adverb",
             "probs_adjective",

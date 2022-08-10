@@ -30,6 +30,18 @@ class Word(Model):
         """Remove a word from the list."""
 
         cls.delete().where(cls.word == word).execute()
+    
+    @classmethod
+    def update(cls, word):
+        """Adds a word to the list if it doesn't exist, delete it if it does."""
+
+        res = list(cls.select().where(cls.word == word))
+
+        if len(res) > 0:
+            res[0].delete_instance()
+        else:
+            cls.create(word=word)
+        
 
     class Meta:
         database = db
@@ -51,4 +63,4 @@ class Adverb(Word):
 
 db.create_tables([Noun, Adjective, Verb, Adverb])
 
-lists = {"nouns": Noun, "adjectives": Adjective, "verbs": Verb, "adverbs": Adverb}
+lists = {"nouns": Noun, "adjectives": Adjective, "verbs": Verb, "adverbs": Adverb, "db": db}

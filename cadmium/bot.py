@@ -40,7 +40,7 @@ class Cadmium(commands.Bot):
         self.add_check(self.block_other_guilds_check)
 
         # Load extensions (cogs)
-        for ext in ("manage_lists", "admin", "error", "test", "auto_thread"):
+        for ext in ("admin", "dashboard", "error", "test", "auto_thread"):
             self.load_extension(f"cadmium.extensions.{ext}")
             print(f"Loaded extension {ext}")
 
