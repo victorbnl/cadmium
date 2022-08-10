@@ -77,7 +77,6 @@ class Config(
             value = values[0] if len(values) == 1 else list(values)
             config.set(key, value)
 
-            print(values)
             message = i18n("messages.config_item_set_to", {"key": key, "value": value})
 
         # Send what has been done
