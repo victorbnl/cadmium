@@ -1,5 +1,5 @@
-from cadmium.utils.lists import lists
-from cadmium.utils import config
+from cadmium.lists import lists
+from cadmium import config
 from cadmium.i18n import i18n
 
 class Dashboard():

@@ -2,23 +2,20 @@
 
 from PyProbs import Probability
 
-from cadmium.utils import config
-from cadmium.utils import lists
+from cadmium import config
+from cadmium import lists
 
 from cadmium.subject.classes import Subject
-
 
 def prob(nature):
     """Determine nature and existence of word according to defined probabilities."""
 
     return Probability.Prob(float(config.get(f"probs_{nature}")))
 
-
 def get_word(list_):
     """Get a random word from a list."""
 
     return lists.lists[list_].get_random()
-
 
 def change_verb_prob(factor):
     """Increment or decrement verbs probabilities."""

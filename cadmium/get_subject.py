@@ -1,4 +1,4 @@
-from cadmium.utils import config
+from cadmium import config
 from cadmium import subject
 from cadmium import inflect
 from cadmium import artwork

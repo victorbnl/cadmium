@@ -11,7 +11,7 @@ from discord.ext import commands
 from cadmium.exceptions import *
 from cadmium.i18n import i18n
 
-from cadmium.utils import config
+from cadmium import config
 
 class Config(
     commands.Cog,

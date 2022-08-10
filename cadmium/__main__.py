@@ -1,6 +1,7 @@
 """Main file, starts the bot and the scheduler."""
 
-from cadmium.utils import env, config
+from cadmium import config
+from cadmium.utils import env
 from cadmium.bot import Cadmium
 
 # Get environment variables

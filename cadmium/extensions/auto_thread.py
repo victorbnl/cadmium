@@ -3,7 +3,7 @@
 import discord.utils
 
 from cadmium.i18n import i18n
-from cadmium.utils import config
+from cadmium import config
 
 def check(message):
     """Validate check if message is in right category and not an excluded channel."""

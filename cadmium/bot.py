@@ -8,7 +8,7 @@ from discord_simple_pretty_help import SimplePrettyHelp
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from cadmium.utils import config
+from cadmium import config
 
 from cadmium.get_subject import get_subject
 
