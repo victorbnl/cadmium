@@ -1,4 +1,6 @@
+from dataclasses import dataclass
+
+@dataclass
 class Line:
-    def __init__(self, content, size):
-        self.content = content
-        self.size = size
+    content: str
+    size: float
