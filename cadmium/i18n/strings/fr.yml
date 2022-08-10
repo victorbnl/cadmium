@@ -26,6 +26,7 @@ messages:
 
   rescheduled_to: 'Envoi reprogrammé à {interval}'
 
+comments: commentaires
 error: Erreur
 
 commands:

@@ -43,7 +43,7 @@ class Config(
         },
     )
     async def config(
-        self, ctx, key: typing.Optional[str], *, value: typing.Optional[str]
+        self, ctx, key: typing.Optional[str], *values,
     ):
         """Defines or shows configuration parameters."""
 
@@ -64,16 +64,18 @@ class Config(
 
             message = f"{string}"
 
-        # Value is None but key is not -> getting config parameter
-        elif value is None:
+        # No values but key -> getting config parameter
+        elif len(values) == 0:
             value = config.get(key)
 
             message = i18n("messages.config_item_is", {"key": key, "value": value})
 
         # Both key and value are set -> set config parameter
         else:
+            value = values[0] if len(values) == 1 else list(values)
             config.set(key, value)
 
+            print(values)
             message = i18n("messages.config_item_set_to", {"key": key, "value": value})
 
         # Send what has been done

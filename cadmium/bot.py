@@ -41,7 +41,7 @@ class Cadmium(commands.Bot):
         self.add_check(self.block_other_guilds_check)
 
         # Load extensions (cogs)
-        for ext in ("manage_lists", "admin", "error", "test"):
+        for ext in ("manage_lists", "admin", "error", "test", "auto_thread"):
             self.load_extension(f"cadmium.extensions.{ext}")
             print(f"Loaded extension {ext}")
 
@@ -55,7 +55,10 @@ class Cadmium(commands.Bot):
         image = get_subject()
 
         # Send subject
-        await channel.send(content=config.get("mention"), file=discord.File(fp=image, filename="subject.jpg"))
+        await channel.send(
+            content=config.get("mention"),
+            file=discord.File(fp=image, filename="subject.jpg"),
+        )
 
     def reschedule_job(self):
         """Reschedules the job, to be ran after a change of interval."""
