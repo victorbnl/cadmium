@@ -43,7 +43,10 @@ class Config(
         },
     )
     async def config(
-        self, ctx, key: typing.Optional[str], *values,
+        self,
+        ctx,
+        key: typing.Optional[str],
+        *values,
     ):
         """Defines or shows configuration parameters."""
 

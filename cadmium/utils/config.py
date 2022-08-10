@@ -46,7 +46,7 @@ class Config:
             setattr(self, key, value)
         else:
             raise InvalidConfigKeyError(f"Invalid configuration item: {key}")
-        
+
         self.write()
 
     def to_dict(self):
