@@ -35,7 +35,6 @@ def change_verb_prob(factor):
 
     config.set("probs_verb", new_verb_prob)
 
-
 def get_subject():
     """Generate a random subject."""
 

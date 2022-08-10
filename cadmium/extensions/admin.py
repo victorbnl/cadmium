@@ -13,7 +13,6 @@ from cadmium.i18n import i18n
 
 from cadmium.utils import config
 
-
 class Config(
     commands.Cog,
     name=i18n("cogs.admin.name"),
@@ -98,7 +97,6 @@ class Config(
         """Manually starts sending a subject."""
 
         await ctx.bot.send_subject()
-
 
 def setup(bot):
     bot.add_cog(Config(bot))

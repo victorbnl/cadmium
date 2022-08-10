@@ -6,7 +6,6 @@ from cadmium.inflect import dictionary
 
 from scripts.download_dict.xml import xml_to_dict
 
-
 def download():
     """Download dictionary into db"""
 

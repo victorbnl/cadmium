@@ -16,7 +16,6 @@ from cadmium.get_subject import get_subject
 intents = discord.Intents.default()
 intents.message_content = True
 
-
 class Cadmium(commands.Bot):
     """The main bot class."""
 

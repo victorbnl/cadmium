@@ -5,7 +5,6 @@ from os import environ
 
 load_dotenv()
 
-
 def get(key):
     """Get an environment variable."""
 

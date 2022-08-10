@@ -2,7 +2,6 @@ from PIL import ImageDraw
 
 from cadmium.artwork.utils import *
 
-
 class Write:
     def __init__(self, image):
         self.draw = ImageDraw.Draw(image)

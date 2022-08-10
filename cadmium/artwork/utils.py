@@ -3,7 +3,6 @@
 import os
 from PIL import ImageFont
 
-
 def get_text_dimensions(text_string, font):
     """Returns the width and height of a text."""
 
@@ -15,7 +14,6 @@ def get_text_dimensions(text_string, font):
     text_height = font.getmask(text_string).getbbox()[3] + descent
 
     return (text_width, text_height)
-
 
 def get_line_dimensions(content, size):
     """Returns the width and height of a line."""
@@ -33,7 +31,6 @@ def get_line_dimensions(content, size):
 
     return width, height
 
-
 def get_font(scale, variant):
     """Get ImageFont font object of desired size."""
 
@@ -43,7 +40,6 @@ def get_font(scale, variant):
     font = ImageFont.truetype(path.format(variant=variant), int(147 * scale))
 
     return font
-
 
 def get_fonts(scale):
     """Get a first-letter font (larger) and a normal font."""

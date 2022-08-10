@@ -4,7 +4,6 @@ import yaml
 
 from cadmium.exceptions import *
 
-
 class Config:
     def __init__(self):
 
@@ -76,7 +75,6 @@ class Config:
 
         with open("data/config.yml", "w") as file_:
             file_.write(yaml.dump(self.to_dict(), allow_unicode=True))
-
 
 _inst = Config()
 get = _inst.get

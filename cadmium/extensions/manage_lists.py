@@ -7,7 +7,6 @@ from typing import Literal
 from cadmium.utils.lists import lists
 from cadmium.i18n import i18n
 
-
 class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
     """Add, remove or list items from the word lists."""
 
@@ -90,7 +89,6 @@ class ManageLists(commands.Cog, name=i18n("cogs.manage_lists.name")):
                 description=", ".join(f"`{item}`" for item in items),
             )
         )
-
 
 def setup(bot):
     bot.add_cog(ManageLists(bot))

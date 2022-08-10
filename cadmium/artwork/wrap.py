@@ -3,7 +3,6 @@
 from cadmium.artwork.data.line import Line
 from cadmium.artwork.utils import *
 
-
 def subject_lines(subject, size, first_line_max_width, second_line_max_width):
     """Wrap a subject into two lines if needed."""
 

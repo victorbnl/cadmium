@@ -3,7 +3,6 @@ from cadmium import subject
 from cadmium import inflect
 from cadmium import artwork
 
-
 def get_subject():
     """Returns the final form of the subject: a banner image."""
 

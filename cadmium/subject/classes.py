@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 from typing import *
 
-
 @dataclass
 class Subject:
     type: Literal["noun", "verb"]

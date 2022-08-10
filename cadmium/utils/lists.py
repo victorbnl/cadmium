@@ -4,7 +4,6 @@ import random
 
 db = SqliteDatabase("data/words.db")
 
-
 class Word(Model):
     word = CharField()
 
@@ -35,7 +34,6 @@ class Word(Model):
     class Meta:
         database = db
 
-
 class Noun(Word):
     pass
 
@@ -50,7 +48,6 @@ class Verb(Word):
 
 class Adverb(Word):
     pass
-
 
 db.create_tables([Noun, Adjective, Verb, Adverb])
 

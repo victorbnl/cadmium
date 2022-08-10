@@ -10,7 +10,6 @@ from cadmium.artwork.write import Write
 from cadmium.artwork.utils import *
 from cadmium.artwork.wrap import *
 
-
 def subject_banner(message, subject):
     """Generate artwork from subject"""
 

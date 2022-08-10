@@ -2,7 +2,6 @@ from lxml.etree import iterparse
 
 from scripts.download_dict.classes import *
 
-
 def xml_to_dict(xml):
     """Get deserialized XML dictionary."""
 
