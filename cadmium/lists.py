@@ -1,8 +1,9 @@
-from peewee import *
-
 import random
 
+from peewee import CharField, Model, SqliteDatabase
+
 db = SqliteDatabase("data/words.db")
+
 
 class Word(Model):
     word = CharField()
@@ -30,10 +31,12 @@ class Word(Model):
         """Remove a word from the list."""
 
         cls.delete().where(cls.word == word).execute()
-    
+
     @classmethod
     def update(cls, word):
-        """Adds a word to the list if it doesn't exist, delete it if it does."""
+        """
+        Adds a word to the list if it doesn't exist, delete it if it does.
+        """
 
         res = list(cls.select().where(cls.word == word))
 
@@ -41,10 +44,10 @@ class Word(Model):
             res[0].delete_instance()
         else:
             cls.create(word=word)
-        
 
     class Meta:
         database = db
+
 
 class Noun(Word):
     pass
@@ -61,6 +64,13 @@ class Verb(Word):
 class Adverb(Word):
     pass
 
+
 db.create_tables([Noun, Adjective, Verb, Adverb])
 
-lists = {"nouns": Noun, "adjectives": Adjective, "verbs": Verb, "adverbs": Adverb, "db": db}
+lists = {
+    "nouns": Noun,
+    "adjectives": Adjective,
+    "verbs": Verb,
+    "adverbs": Adverb,
+    "db": db
+}

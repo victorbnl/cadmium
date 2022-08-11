@@ -1,7 +1,5 @@
-from cadmium import config
-from cadmium import subject
-from cadmium import inflect
-from cadmium import artwork
+from cadmium import artwork, config, inflect, subject
+
 
 def get_subject():
     """Returns the final form of the subject: a banner image."""

@@ -4,21 +4,27 @@ import discord
 from discord.ext import commands
 from discord_simple_pretty_help import SimplePrettyHelp
 
-from cadmium.scheduler import Scheduler
 from cadmium import config
 from cadmium.get_subject import get_subject
+from cadmium.scheduler import Scheduler
 
 # Intents required for interacting with messages
 intents = discord.Intents.default()
 intents.message_content = True
 
+
 class Cadmium(commands.Bot):
     """The main bot class."""
 
     async def block_other_guilds_check(self, ctx):
-        """Checks if the command has been sent in the correct guild and by the correct role."""
+        """
+        Checks if the command has been sent in the correct guild and by the
+        correct role.
+        """
 
-        role = discord.utils.find(lambda r: r.id == self.role_id, ctx.guild.roles)
+        role = discord.utils.find(
+            lambda r: r.id == self.role_id, ctx.guild.roles
+        )
         return ctx.guild.id == self.guild_id and role in ctx.author.roles
 
     def __init__(self, guild_id, role_id, prefix, color):
@@ -41,7 +47,10 @@ class Cadmium(commands.Bot):
             print(f"Loaded extension {ext}")
 
     async def send_subject(self):
-        """Sends a subject. Function to be called at every interval and by the trigger command."""
+        """
+        Sends a subject. Function to be called at every interval and by the
+        trigger command.
+        """
 
         # Channel
         channel_id = int(config.get("channel"))

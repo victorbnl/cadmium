@@ -1,6 +1,6 @@
 from lxml.etree import iterparse
+from scripts.download_dict.classes import Dict, Entry, Inflected
 
-from scripts.download_dict.classes import *
 
 def xml_to_dict(xml):
     """Get deserialized XML dictionary."""
@@ -59,7 +59,9 @@ def xml_to_dict(xml):
             if pos in ("noun", "adj") or (pos == "verb" and tense == "ppast"):
 
                 # Add inflection to list
-                inflections.append(Inflected(form, gender, tense, person, number))
+                inflections.append(
+                    Inflected(form, gender, tense, person, number)
+                )
 
                 # Reset inflected variables
                 form = tense = gender = number = person = None

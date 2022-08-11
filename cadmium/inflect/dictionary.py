@@ -1,10 +1,12 @@
-from peewee import *
+from peewee import CharField, ForeignKeyField, Model, SqliteDatabase
 
 db = SqliteDatabase("data/dictionary.db")
+
 
 class BaseModel(Model):
     class Meta:
         database = db
+
 
 class Entry(BaseModel):
     lemma = CharField()
@@ -14,11 +16,13 @@ class Entry(BaseModel):
     def add(cls, lemma, pos):
         return cls.insert(lemma=lemma, pos=pos).execute()
 
+
 class Inflection(BaseModel):
     entry_id = ForeignKeyField(Entry)
     form = CharField()
     gender = CharField(null=True)
     number = CharField(null=True)
+
 
 def get_inflection(word):
     """Get noun gender and number."""
@@ -30,6 +34,7 @@ def get_inflection(word):
     )
 
     return {"gender": res.gender, "number": res.number}
+
 
 def inflect_adjective(adjective, gender, number):
     """Inflect adjective according to gender and number."""
@@ -51,5 +56,6 @@ def inflect_adjective(adjective, gender, number):
         .get()
         .form
     )
+
 
 db.create_tables([Entry, Inflection])

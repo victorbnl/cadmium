@@ -1,9 +1,11 @@
 """Utility for accessing environment variables."""
 
-from dotenv import load_dotenv
 from os import environ
 
+from dotenv import load_dotenv
+
 load_dotenv()
+
 
 def get(key):
     """Get an environment variable."""

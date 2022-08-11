@@ -1,17 +1,13 @@
 """Commands for administrating the bot."""
 
-import subprocess
 import typing
-from sys import exit
-import os.path
 
 import discord
 from discord.ext import commands
 
-from cadmium.exceptions import *
+from cadmium import config
 from cadmium.i18n import i18n
 
-from cadmium import config
 
 class Config(
     commands.Cog,
@@ -19,18 +15,6 @@ class Config(
     description=i18n("cogs.admin.description"),
 ):
     """Set or get configuration parameters."""
-
-    @commands.command(brief=i18n("commands.update.brief"))
-    async def update(self, ctx):
-        """Updates the bot."""
-
-        if os.path.exists("update.sh"):
-            await ctx.send(embed=discord.Embed(description=i18n("messages.updating")))
-            subprocess.run(["./update.sh"])
-            exit(0)
-
-        else:
-            raise MissingUpdateScriptError(i18n("messages.missing_update_script"))
 
     @commands.command(
         brief=i18n("commands.config.brief"),
@@ -70,14 +54,18 @@ class Config(
         elif len(values) == 0:
             value = config.get(key)
 
-            message = i18n("messages.config_item_is", {"key": key, "value": value})
+            message = i18n(
+                "messages.config_item_is", {"key": key, "value": value}
+            )
 
         # Both key and value are set -> set config parameter
         else:
             value = values[0] if len(values) == 1 else list(values)
             config.set(key, value)
 
-            message = i18n("messages.config_item_set_to", {"key": key, "value": value})
+            message = i18n(
+                "messages.config_item_set_to", {"key": key, "value": value}
+            )
 
         # Send what has been done
         await ctx.send(embed=discord.Embed(description=message))
@@ -88,7 +76,9 @@ class Config(
 
         ctx.bot.reschedule_job()
         await ctx.send(
-            i18n("messages.rescheduled_to", {"interval": config.get("interval")})
+            i18n(
+                "messages.rescheduled_to", {"interval": config.get("interval")}
+            )
         )
 
     @commands.command(brief=i18n("commands.trigger.brief"))
@@ -96,6 +86,7 @@ class Config(
         """Manually starts sending a subject."""
 
         await ctx.bot.send_subject()
+
 
 def setup(bot):
     bot.add_cog(Config(bot))

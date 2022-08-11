@@ -1,6 +1,7 @@
 from PIL import ImageDraw
 
-from cadmium.artwork.utils import *
+from cadmium.artwork import utils
+
 
 class Write:
     def __init__(self, image):
@@ -17,10 +18,10 @@ class Write:
             fl_font_size = int(1.5 * font_size)
 
             # Get font objects
-            fl_font, font = get_fonts(line.size)
+            fl_font, font = utils.get_fonts(line.size)
 
             # Get first letter size
-            fl_width, fl_height = get_text_dimensions(line.content[0], fl_font)
+            fl_width, fl_height = utils.get_text_dimensions(line.content[0], fl_font)
 
             # Move up by the line height
             current_y -= fl_height

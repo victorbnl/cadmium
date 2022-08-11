@@ -2,20 +2,22 @@
 
 from PyProbs import Probability
 
-from cadmium import config
-from cadmium import lists
+from cadmium import config, lists
 
-from cadmium.subject.classes import Subject
 
 def prob(nature):
-    """Determine nature and existence of word according to defined probabilities."""
+    """
+    Determine nature and existence of word according to defined probabilities.
+    """
 
     return Probability.Prob(float(config.get(f"probs_{nature}")))
+
 
 def get_word(list_):
     """Get a random word from a list."""
 
     return lists.lists[list_].get_random()
+
 
 def change_verb_prob(factor):
     """Increment or decrement verbs probabilities."""
@@ -32,15 +34,16 @@ def change_verb_prob(factor):
 
     config.set("probs_verb", new_verb_prob)
 
+
 def get_subject():
     """Generate a random subject."""
 
-    verb = adverb = noun = adjective = second_adjective = None
+    subject = []
 
     # Verb
     if prob("verb"):
-        type = "verb"
         verb = get_word("verbs")
+        subject.append(verb)
 
         # Verb picked ; decrease noun prob
         change_verb_prob(-1)
@@ -48,11 +51,12 @@ def get_subject():
         # Adverb
         if prob("adverb"):
             adverb = get_word("adverbs")
+            subject.append(adverb)
 
     # Noun
     else:
-        type = "noun"
         noun = get_word("nouns")
+        subject.append(noun)
 
         # Noun picked ; decrease verb prob
         change_verb_prob(+1)
@@ -60,9 +64,13 @@ def get_subject():
         # Adjective
         if prob("adjective"):
             adjective = get_word("adjectives")
+            subject.append(adjective)
 
             # Second adjective
             if prob("second_adjective"):
                 second_adjective = get_word("adjectives")
+                subject.append(second_adjective)
 
-    return Subject(type, noun, verb, adverb, adjectives=[adjective, second_adjective])
+    subject = " ".join(subject)
+
+    return subject

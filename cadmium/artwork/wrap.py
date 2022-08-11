@@ -1,7 +1,8 @@
 """Wraps the subject into two lines if it's too wide."""
 
+from cadmium.artwork import utils
 from cadmium.artwork.data.line import Line
-from cadmium.artwork.utils import *
+
 
 def subject_lines(subject, size, first_line_max_width, second_line_max_width):
     """Wrap a subject into two lines if needed."""
@@ -10,7 +11,7 @@ def subject_lines(subject, size, first_line_max_width, second_line_max_width):
     nsize = 0.8 * size
 
     # Get subject width
-    width = get_line_dimensions(subject, size)[0]
+    width = utils.get_line_dimensions(subject, size)[0]
 
     # If subject too large
     if width > first_line_max_width:
@@ -20,7 +21,8 @@ def subject_lines(subject, size, first_line_max_width, second_line_max_width):
         first_line_width = width
         second_line_width = 0
 
-        # While the first line is too large and the second line didn't reach its max width
+        # While the first line is too large and the second line didn't reach
+        # its max width
         while (
             first_line_width > first_line_max_width
             and second_line_width < second_line_max_width
@@ -30,11 +32,17 @@ def subject_lines(subject, size, first_line_max_width, second_line_max_width):
             second_line.append(first_line.pop(0))
 
             # Recalculate widths
-            first_line_width = get_line_dimensions(" ".join(first_line), nsize)[0]
-            second_line_width = get_line_dimensions(" ".join(second_line), nsize)[0]
+            first_line_width = utils.get_line_dimensions(
+                " ".join(first_line), nsize
+            )[0]
+            second_line_width = utils.get_line_dimensions(
+                " ".join(second_line), nsize
+            )[0]
 
         # Return formatted lines with new text size
-        return [Line(" ".join(l), nsize) for l in [first_line, second_line]]
+        return [
+            Line(" ".join(line), nsize) for line in [first_line, second_line]
+        ]
 
     # If subject is not too large
     else:

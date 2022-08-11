@@ -2,13 +2,13 @@
 
 import os
 from io import BytesIO
+
 from PIL import Image
 
+from cadmium.artwork import wrap
 from cadmium.artwork.data.line import Line
 from cadmium.artwork.write import Write
 
-from cadmium.artwork.utils import *
-from cadmium.artwork.wrap import *
 
 def subject_banner(message, subject):
     """Generate artwork from subject"""
@@ -32,7 +32,7 @@ def subject_banner(message, subject):
     lines = []
 
     # Cut the subject into two lines if necessary
-    for subject_line in subject_lines(subject, 1, 1500, 1000):
+    for subject_line in wrap.subject_lines(subject, 1, 1500, 1000):
         lines.append(subject_line)
 
     # Add the message line

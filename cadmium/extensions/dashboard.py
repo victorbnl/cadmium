@@ -1,8 +1,9 @@
 import discord.errors
 
-from cadmium.lists import lists
 from cadmium import config
 from cadmium.i18n import i18n
+from cadmium.lists import lists
+
 
 class Dashboard():
 
@@ -23,7 +24,7 @@ class Dashboard():
         # No message file
         except FileNotFoundError:
             pass
-    
+
     async def update(self):
 
         # Content
@@ -63,10 +64,10 @@ class Dashboard():
         # Save it
         with open("data/dashboard_message_id.txt", "w") as file_:
             file_.write(str(self.message_id))
-    
+
     async def on_ready(self):
         await self.update()
-    
+
     async def on_message(self, message):
         pass
 
@@ -74,12 +75,26 @@ class Dashboard():
 
         if message.content:
 
-            if parsed[0] in ("noun", "nouns", "verb", "verbs", "adjective", "adjectives", "adverb", "adverbs"):
+            if parsed[0] in (
+                "noun",
+                "nouns",
+                "verb",
+                "verbs",
+                "adjective",
+                "adjectives",
+                "adverb",
+                "adverbs"
+            ):
 
                 await message.delete()
-            
+
                 list_ = parsed[0]
-                plurals = {'noun': 'nouns', 'verb': 'verbs', 'adjective': 'adjectives', 'adverb': 'adverbs'}
+                plurals = {
+                    'noun': 'nouns',
+                    'verb': 'verbs',
+                    'adjective': 'adjectives',
+                    'adverb': 'adverbs'
+                }
                 if list_ in plurals.keys():
                     list_ = plurals[list_]
                 list_ = lists[list_]
@@ -89,8 +104,9 @@ class Dashboard():
                 with lists["db"].atomic():
                     for word in words:
                         list_.update(word)
-                
+
                 await self.update()
+
 
 def setup(bot):
 
