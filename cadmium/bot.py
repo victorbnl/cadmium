@@ -2,14 +2,10 @@
 
 import discord
 from discord.ext import commands
-
 from discord_simple_pretty_help import SimplePrettyHelp
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-
+from cadmium.scheduler import Scheduler
 from cadmium import config
-
 from cadmium.get_subject import get_subject
 
 # Intents required for interacting with messages
@@ -68,12 +64,9 @@ class Cadmium(commands.Bot):
         """Sets up the scheduler."""
 
         # Create the scheduler used to send subject each `interval`
-        scheduler = AsyncIOScheduler()
-        scheduler.add_job(
+        self.scheduler = Scheduler(
             self.send_subject,
-            CronTrigger.from_crontab(config.get("interval")),
-            id="send_subject",
+            config.get("interval")
         )
-        scheduler.start()
 
         print("Ready!")
