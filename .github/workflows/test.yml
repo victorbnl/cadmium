@@ -1,0 +1,39 @@
+name: Test
+
+on:
+  - push
+  - workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2.4.2
+
+    - name: Setup Python
+      uses: actions/setup-python@v4.2.0
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+
+    - name: Install requirements
+      shell: bash
+      run: pip install -r requirements.txt
+
+    - name: Install pytest
+      shell: bash
+      run: pip install -r requirements-dev.txt
+
+    - name: Create data directory
+      run: mkdir data
+      shell: bash
+
+    - name: Download inflection dictionary
+      shell: bash
+      run: python3 -m cadmium.inflect.dictionary.download
+
+    - name: Run pytest
+      shell: bash
+      run: python3 -m pytest
