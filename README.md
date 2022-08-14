@@ -10,6 +10,7 @@ Discord bot for the french server [*La Forge Indigo*](https://discord.gg/NVvpe8S
 # Run
 
 - Install the dependencies: `pip install -r requirements.txt`
+- Create a `data` folder
 - Download the inflection dictionary: `python3 -m cadmium.inflect.dictionary.download`
 - Rename `.env.sample` to `.env` and complete it
 - Run the bot: `python3 -m cadmium`
