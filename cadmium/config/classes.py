@@ -10,7 +10,7 @@ from cadmium.config.exceptions import InvalidConfigKeyError
 class Config():
 
     prefix: str = '$'
-    channel: int = 0
+    channel: int = None
     color: int = 0x0000ff
     interval: str = '* * * * *'
     message: str = "The subject is"
@@ -22,9 +22,9 @@ class Config():
     probs_second_adjective: int = 0.3
     probs_verb_step: int = 0.2
 
-    dashboard_channel: int = 0
+    dashboard_channel: int = None
 
-    auto_thread_channels: int = 0
+    auto_thread_channels: int = None
 
     welcome_channel: int = None
     welcome_message: str = 'Welcome {mention}!'
