@@ -21,6 +21,9 @@ class Welcome():
             name=member.name
         )
 
+        # Send message
+        await channel.send(message)
+
     async def on_member_join(self, member):
         """When a member joins the server."""
 
