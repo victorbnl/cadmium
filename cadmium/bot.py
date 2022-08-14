@@ -27,9 +27,6 @@ class CadmiumBot(commands.Bot):
         # Subjects channel
         self.channel_id = int(config.get('channel'))
 
-        # Mention
-        self.mention = config.get('mention')
-
         # Command check
 
         self.guild_id = int(guild_id)
@@ -74,6 +71,6 @@ class CadmiumBot(commands.Bot):
 
         # Send it
         await channel.send(
-            content=self.mention,
+            content=config.get('mention'),
             file=discord.File(fp=banner, filename="subject.jpg")
         )
