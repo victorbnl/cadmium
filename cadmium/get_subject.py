@@ -20,6 +20,6 @@ def get_subject():
 
     the_subject = subject_utils.format_subject(the_subject)
 
-    banner = artwork.subject_banner("The subject is", the_subject)
+    banner = artwork.subject_banner(config.get('message'), the_subject)
 
     return banner
