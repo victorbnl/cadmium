@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands
 from discord_simple_pretty_help import SimplePrettyHelp
 
-from cadmium import scheduler, get_subject, config
+from cadmium import scheduler, config
+from cadmium.utils import get_subject
 
 
 intents = discord.Intents.default()

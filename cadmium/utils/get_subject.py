@@ -1,4 +1,5 @@
-from cadmium import subject, lists, config, subject_utils, artwork
+from cadmium import subject, lists, config, artwork
+from cadmium.utils import subject_utils
 
 
 def get_subject():

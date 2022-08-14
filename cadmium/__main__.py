@@ -1,4 +1,4 @@
-from cadmium import env
+from cadmium.utils import env
 from cadmium.bot import CadmiumBot
 
 bot = CadmiumBot(
