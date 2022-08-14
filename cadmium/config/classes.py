@@ -16,11 +16,11 @@ class Config():
     message: str = "The subject is"
     mention: str = ""
 
-    probs_verb: int = 0.5
-    probs_adverb: int = 0.9
-    probs_adjective: int = 0.8
-    probs_second_adjective: int = 0.3
-    probs_verb_step: int = 0.2
+    probs_verb: float = 0.5
+    probs_adverb: float = 0.9
+    probs_adjective: float = 0.8
+    probs_second_adjective: float = 0.3
+    probs_verb_step: float = 0.2
 
     dashboard_channel: int = None
 
