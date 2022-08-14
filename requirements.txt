@@ -4,6 +4,6 @@ PyYAML
 lxml
 python-dotenv
 Pillow
-py-cord
+py-cord==2.0.0
 discord-simple-pretty-help
 APScheduler
