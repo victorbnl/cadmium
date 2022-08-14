@@ -26,6 +26,10 @@ class Config():
 
     auto_thread_channels: int = 0
 
+    welcome_channel: int = None
+    welcome_message: str = 'Welcome {mention}!'
+    goodbye_message: str = 'Goodbye {mention}'
+
     def get(self, key):
         """Get configuration item."""
 

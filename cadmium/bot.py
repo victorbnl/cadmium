@@ -8,6 +8,7 @@ from cadmium.utils import get_subject
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 
 class CadmiumBot(commands.Bot):
@@ -43,7 +44,8 @@ class CadmiumBot(commands.Bot):
 
         # Load extensions
         for ext in (
-            'dashboard', 'test', 'config', 'auto_thread', 'error', 'admin'
+            'dashboard', 'test', 'config', 'auto_thread', 'error', 'admin',
+            'welcome'
         ):
             print(f"Loading extension {ext}")
             self.load_extension(f'cadmium.extensions.{ext}', store=False)
