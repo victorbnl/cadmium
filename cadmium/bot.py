@@ -1,81 +1,79 @@
-"""The bot."""
-
 import discord
 from discord.ext import commands
 from discord_simple_pretty_help import SimplePrettyHelp
 
-from cadmium import config
-from cadmium.get_subject import get_subject
-from cadmium.scheduler import Scheduler
+from cadmium import scheduler, get_subject, config
 
-# Intents required for interacting with messages
+
 intents = discord.Intents.default()
 intents.message_content = True
 
 
-class Cadmium(commands.Bot):
-    """The main bot class."""
+class CadmiumBot(commands.Bot):
 
-    async def block_other_guilds_check(self, ctx):
-        """
-        Checks if the command has been sent in the correct guild and by the
-        correct role.
-        """
-
-        role = discord.utils.find(
-            lambda r: r.id == self.role_id, ctx.guild.roles
-        )
-        return ctx.guild.id == self.guild_id and role in ctx.author.roles
-
-    def __init__(self, guild_id, role_id, prefix, color):
-        """Initialize the bot."""
+    def __init__(
+        self,
+        guild_id,
+        role_id
+    ):
+        """The Cadmium Discord bot."""
 
         super().__init__(
-            command_prefix=prefix,
+            command_prefix=config.get('prefix'),
             intents=intents,
-            help_command=SimplePrettyHelp(color=color),
+            help_command=SimplePrettyHelp(),
         )
+
+        # Subjects channel
+        self.channel_id = int(config.get('channel'))
+
+        # Mention
+        self.mention = config.get('mention')
 
         # Command check
-        self.guild_id = guild_id
-        self.role_id = role_id
-        self.add_check(self.block_other_guilds_check)
 
-        # Load extensions (cogs)
-        for ext in ("admin", "dashboard", "error", "test", "auto_thread"):
-            self.load_extension(f"cadmium.extensions.{ext}")
-            print(f"Loaded extension {ext}")
+        self.guild_id = int(guild_id)
+        self.role_id = int(role_id)
 
-    async def send_subject(self):
-        """
-        Sends a subject. Function to be called at every interval and by the
-        trigger command.
-        """
+        def check(ctx):
+            return (
+                ctx.guild.id == self.guild_id
+                and self.role_id in [role.id for role in ctx.author.roles]
+            )
 
-        # Channel
-        channel_id = int(config.get("channel"))
-        channel = self.get_channel(channel_id)
+        self.add_check(check)
 
-        image = get_subject()
-
-        # Send subject
-        await channel.send(
-            content=config.get("mention"),
-            file=discord.File(fp=image, filename="subject.jpg"),
-        )
-
-    def reschedule_job(self):
-        """Reschedules the job, to be ran after a change of interval."""
-
-        raise NotImplementedError
+        # Load extensions
+        for ext in (
+            'dashboard', 'test', 'config', 'auto_thread', 'error', 'admin'
+        ):
+            print(f"Loading extension {ext}")
+            self.load_extension(f'cadmium.extensions.{ext}', store=False)
 
     async def on_ready(self):
-        """Sets up the scheduler."""
+        """When the bot is ready."""
 
-        # Create the scheduler used to send subject each `interval`
-        self.scheduler = Scheduler(
-            self.send_subject,
-            config.get("interval")
+        # Fetch channel
+        self.channel = self.get_channel(self.channel_id)
+
+        # Schedule subject sending
+        scheduler.schedule(self.send_subject, config.get('interval'))
+
+        print("Ready")
+
+    async def send_subject(self, channel_id=None):
+        """Generate and send a subject."""
+
+        # Fetch channel if channel id provided
+        channel = self.channel
+        if channel_id:
+            channel = self.get_channel(channel_id)
+
+        # Get subject banner
+        banner = get_subject.get_subject()
+
+        # Send it
+        await channel.send(
+            content=self.mention,
+            file=discord.File(fp=banner, filename="subject.jpg")
         )
-
-        print("Ready!")

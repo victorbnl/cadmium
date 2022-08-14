@@ -11,7 +11,7 @@ async def on_command_error(ctx, error):
     # Send error message
     await ctx.send(
         embed=discord.Embed(
-            title=i18n("error"),
+            title=i18n('error'),
             description=error,
             color=0xFF0000
         )

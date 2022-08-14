@@ -24,6 +24,7 @@ async def on_message(message):
         if len(message.content) > 0:
             name = (
                 discord.utils.remove_markdown(message.clean_content)
+                .split("\n")[0]
                 .lower()
                 .strip()[0:30]
             )

@@ -1,10 +1,9 @@
+PyProbs
+peewee
+PyYAML
+lxml
+python-dotenv
+Pillow
 py-cord
 discord-simple-pretty-help
 APScheduler
-tzlocal==2.1
-python-dotenv
-pyyaml
-pyprobs
-lxml
-Pillow
-peewee

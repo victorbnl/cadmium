@@ -1,27 +1,6 @@
-from peewee import CharField, ForeignKeyField, Model, SqliteDatabase
+"""Some useful functions to access specific dictionary elements."""
 
-db = SqliteDatabase("data/dictionary.db")
-
-
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-
-class Entry(BaseModel):
-    lemma = CharField()
-    pos = CharField()
-
-    @classmethod
-    def add(cls, lemma, pos):
-        return cls.insert(lemma=lemma, pos=pos).execute()
-
-
-class Inflection(BaseModel):
-    entry_id = ForeignKeyField(Entry)
-    form = CharField()
-    gender = CharField(null=True)
-    number = CharField(null=True)
+from cadmium.inflect.dictionary.database import Entry, Inflection
 
 
 def get_inflection(word):
@@ -33,7 +12,7 @@ def get_inflection(word):
         .get()
     )
 
-    return {"gender": res.gender, "number": res.number}
+    return {'gender': res.gender, 'number': res.number}
 
 
 def inflect_adjective(adjective, gender, number):
@@ -56,6 +35,3 @@ def inflect_adjective(adjective, gender, number):
         .get()
         .form
     )
-
-
-db.create_tables([Entry, Inflection])

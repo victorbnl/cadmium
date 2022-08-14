@@ -1,55 +1,28 @@
 lists:
-  adjectives: adjectifs
-  adverbs: adverbes
-  nouns: noms
-  verbs: verbes
+  adjective: adjectifs
+  adverb: adverbes
+  noun: noms
+  verb: verbes
 
 cogs:
-
-  manage_lists:
-    name: Gérer les listes
 
   admin:
     name: Administration
     description: Administrer le bot
 
+  config:
+    name: Configuration
+    description: Configurer le bot
+
 messages:
-
-  added: 'Ajouté·s à la liste {list} : {words}'
-  removed: 'Retiré·s de la liste {list} : {words}'
-
-  updating: Mise à jour du bot
-  missing_update_script: Script de mise à jour manquant
 
   config_item_is: '{key} est défini sur {value}'
   config_item_set_to: '{key} a été défini sur {value}'
-
-  rescheduled_to: 'Envoi reprogrammé à {interval}'
 
 comments: commentaires
 error: Erreur
 
 commands:
-
-  add:
-    brief: Ajoute un mot à une liste
-    args:
-      type: nature
-      words: mots à ajouter
-  
-  remove:
-    brief: Retire un mot d'une liste
-    args:
-      type: nature
-      words: mots à retirer
-
-  list:
-    brief: Affiche les mots d'une liste
-    args:
-      type: nature
-
-  update:
-    brief: Met à jour le bot
 
   config:
     brief: Afficher ou définir des paramètres de configuration
@@ -57,8 +30,5 @@ commands:
       key: propriété (utiliser des points pour les props imbriquées)
       value: valeur sur laquelle la configurer
 
-  reschedule:
-    brief: Relancer le scheduler après un changement d'intervalle
-  
   trigger:
     brief: Lancer manuellement la génération d'un sujet

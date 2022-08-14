@@ -1,76 +1,73 @@
-"""Subjects."""
+"""Get subject."""
+
+from typing import Dict, List
+import random
 
 from PyProbs import Probability
 
-from cadmium import config, lists
+from cadmium.subject.classes import Subject
+from cadmium.subject.exceptions import EmptyWordListError
 
 
-def prob(nature):
-    """
-    Determine nature and existence of word according to defined probabilities.
-    """
+class SubjectGenerator():
 
-    return Probability.Prob(float(config.get(f"probs_{nature}")))
+    def __init__(
+        self,
+        words,
+        probs
+    ):
+        self.words = words
+        self.probs = probs
+
+    def prob(self, nature: str) -> bool:
+        """Choose whether word type is chosen or not according to prob."""
+
+        return Probability.Prob(getattr(self.probs, nature))
+
+    def get_word(self, nature: str) -> str:
+        """Get a random word with the given nature."""
+
+        if len(getattr(self.words, nature)) > 0:
+            return random.choice(getattr(self.words, nature))
+
+        else:
+            raise EmptyWordListError(f"Empty word list: {nature}")
+
+    def get_subject(self) -> str:
+        """Generate a random subject."""
+
+        noun = adjective = second_adjective = verb = adverb = None
+
+        # Verb
+        if self.prob('verb'):
+            verb = self.get_word('verb')
+
+            # Adverb
+            if self.prob('adverb'):
+                adverb = self.get_word('adverb')
+
+        # Noun
+        else:
+            noun = self.get_word('noun')
+
+            # Adjective
+            if self.prob('adjective'):
+                adjective = self.get_word('adjective')
+
+                # Second adjective
+                if self.prob('second_adjective'):
+                    second_adjective = self.get_word('adjective')
+
+        return Subject(
+            verb=verb,
+            adverb=adverb,
+            noun=noun,
+            adjective=adjective,
+            second_adjective=second_adjective
+        )
 
 
-def get_word(list_):
-    """Get a random word from a list."""
+def get_subject(words: Dict[str, List[str]], probs: Dict[str, int]):
+    """Get a random subject."""
 
-    return lists.lists[list_].get_random()
-
-
-def change_verb_prob(factor):
-    """Increment or decrement verbs probabilities."""
-
-    verb_prob = float(config.get("probs_verb"))
-    step = float(config.get("probs_verb_step"))
-
-    new_verb_prob = round(verb_prob + factor * step, 1)
-
-    if new_verb_prob < 0:
-        new_verb_prob = 0
-    elif new_verb_prob > 1:
-        new_verb_prob = 1
-
-    config.set("probs_verb", new_verb_prob)
-
-
-def get_subject():
-    """Generate a random subject."""
-
-    subject = []
-
-    # Verb
-    if prob("verb"):
-        verb = get_word("verbs")
-        subject.append(verb)
-
-        # Verb picked ; decrease noun prob
-        change_verb_prob(-1)
-
-        # Adverb
-        if prob("adverb"):
-            adverb = get_word("adverbs")
-            subject.append(adverb)
-
-    # Noun
-    else:
-        noun = get_word("nouns")
-        subject.append(noun)
-
-        # Noun picked ; decrease verb prob
-        change_verb_prob(+1)
-
-        # Adjective
-        if prob("adjective"):
-            adjective = get_word("adjectives")
-            subject.append(adjective)
-
-            # Second adjective
-            if prob("second_adjective"):
-                second_adjective = get_word("adjectives")
-                subject.append(second_adjective)
-
-    subject = " ".join(subject)
-
-    return subject
+    return SubjectGenerator(words=words, probs=probs).get_subject()

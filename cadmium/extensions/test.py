@@ -1,18 +1,26 @@
-import discord
-from discord.ext import commands
+"""Commands for testing code."""
 
-from cadmium.get_subject import get_subject
+from discord.ext import commands
 
 
 class Test(commands.Cog):
+    """Commands for testing code."""
+
     @commands.group()
     async def test(self, ctx):
-        pass
+        """Test command group."""
 
     @test.command()
     async def simulate(self, ctx):
-        image = get_subject()
-        await ctx.send(file=discord.File(fp=image, filename="subject.jpg"))
+        """Simulate a subject sending in the current channel."""
+
+        await ctx.bot.send_subject(channel_id=ctx.channel.id)
+
+    @test.command()
+    async def error(self, ctx):
+        """Simulate an error."""
+
+        return 1/0
 
 
 def setup(bot):

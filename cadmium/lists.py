@@ -1,8 +1,9 @@
-import random
+"""Access and manage word lists database items."""
 
 from peewee import CharField, Model, SqliteDatabase
 
-db = SqliteDatabase("data/words.db")
+
+db = SqliteDatabase('data/words.db')
 
 
 class Word(Model):
@@ -13,12 +14,6 @@ class Word(Model):
         """Get all the items of the list."""
 
         return [x.word for x in cls.select()]
-
-    @classmethod
-    def get_random(cls):
-        """Get a random word from the list."""
-
-        return random.choice(list(cls.select())).word
 
     @classmethod
     def add(cls, word):
@@ -67,10 +62,8 @@ class Adverb(Word):
 
 db.create_tables([Noun, Adjective, Verb, Adverb])
 
-lists = {
-    "nouns": Noun,
-    "adjectives": Adjective,
-    "verbs": Verb,
-    "adverbs": Adverb,
-    "db": db
-}
+
+noun = Noun
+adjective = Adjective
+verb = Verb
+adverb = Adverb

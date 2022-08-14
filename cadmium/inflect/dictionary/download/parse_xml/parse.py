@@ -1,8 +1,8 @@
 from lxml.etree import iterparse
-from scripts.download_dict.classes import Dict, Entry, Inflected
+from cadmium.inflect.dictionary.download.parse_xml.classes import Dict, Entry, Inflected
 
 
-def xml_to_dict(xml):
+def parse(xml):
     """Get deserialized XML dictionary."""
 
     # Variables

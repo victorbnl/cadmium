@@ -1,1 +1,1 @@
-from cadmium.inflect.inflect import inflect_subject
+from cadmium.inflect.dictionary import get_inflection, inflect_adjective

@@ -1,13 +1,15 @@
+"""Dashboard for managing lists."""
+
 import discord.errors
 
-from cadmium import config
+from cadmium import config, lists
 from cadmium.i18n import i18n
-from cadmium.lists import lists
 
 
 class Dashboard():
 
     def __init__(self, bot):
+        super().__init__()
 
         self.bot = bot
         self.channel_id = int(config.get("dashboard_channel"))
@@ -26,7 +28,6 @@ class Dashboard():
             pass
 
     async def update(self):
-
         # Content
         content = ("\n\n".join(
             "\n".join(
@@ -34,11 +35,11 @@ class Dashboard():
                     f"**__{i18n(f'lists.{lst}').capitalize()}__**",
                     ", ".join(
                         f"`{word}`"
-                        for word in lists[lst].items()
+                        for word in getattr(lists, lst).items()
                     )
                 )
             )
-            for lst in ('nouns', 'verbs', 'adjectives', 'adverbs')
+            for lst in ('noun', 'verb', 'adjective', 'adverb')
         ))
 
         # Get channel
@@ -69,12 +70,18 @@ class Dashboard():
         await self.update()
 
     async def on_message(self, message):
-        pass
 
-        parsed = message.content.split()
+        # Check if message has been sent in dashboard and is not the bot's one
+        if (
+            message.channel.id == self.channel_id
+            and message.author.id != self.bot.user.id
+        ):
 
-        if message.content:
+            # Parse and delete message
+            parsed = message.content.split()
+            await message.delete()
 
+            # If first word is a command
             if parsed[0] in (
                 "noun",
                 "nouns",
@@ -86,25 +93,26 @@ class Dashboard():
                 "adverbs"
             ):
 
-                await message.delete()
-
+                # Support both singular and plural
                 list_ = parsed[0]
-                plurals = {
-                    'noun': 'nouns',
-                    'verb': 'verbs',
-                    'adjective': 'adjectives',
-                    'adverb': 'adverbs'
+                singular = {
+                    'nouns': 'noun',
+                    'verbs': 'verb',
+                    'adjectives': 'adjective',
+                    'adverbs': 'adverb'
                 }
-                if list_ in plurals.keys():
-                    list_ = plurals[list_]
-                list_ = lists[list_]
+                if list_ in singular.keys():
+                    list_ = singular[list_]
+                list_ = getattr(lists, list_)
 
                 words = parsed[1:]
 
-                with lists["db"].atomic():
+                # Add or remove each word
+                with lists.db.atomic():
                     for word in words:
                         list_.update(word)
 
+                # Update dashboard message
                 await self.update()
 
 
@@ -112,5 +120,5 @@ def setup(bot):
 
     dashboard = Dashboard(bot)
 
-    bot.add_listener(dashboard.on_ready)
     bot.add_listener(dashboard.on_message)
+    bot.add_listener(dashboard.on_ready)

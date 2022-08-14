@@ -1,3 +1,0 @@
-[tool.isort]
-known_cadmium="cadmium"
-sections=["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","LOCALFOLDER","CADMIUM"]
