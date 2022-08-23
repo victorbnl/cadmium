@@ -41,6 +41,6 @@ def inflect_adjective(adjective, gender, number):
         .form
     )
 
-    logger.debug(f"Got inflected adjective: {adjective}")
+    logger.debug(f"Got inflected adjective: {inflected_adjective}")
 
     return inflected_adjective
