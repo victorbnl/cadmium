@@ -23,7 +23,15 @@ class SubjectGenerator():
     def prob(self, nature: str) -> bool:
         """Choose whether word type is chosen or not according to prob."""
 
-        return Probability.Prob(getattr(self.probs, nature))
+        prob = float(getattr(self.probs, nature))
+
+        logger.debug(f"Probs of getting: {nature} are: {prob}")
+
+        result = Probability.Prob(prob)
+
+        logger.debug(f"Getting an {nature}: {'yes' if result else 'no'}")
+
+        return result
 
     def get_word(self, nature: str) -> str:
         """Get a random word with the given nature."""
