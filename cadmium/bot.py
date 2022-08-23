@@ -12,6 +12,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 
+
 class CadmiumBot(commands.Bot):
 
     def __init__(
