@@ -5,11 +5,12 @@ from discord_simple_pretty_help import SimplePrettyHelp
 from cadmium import scheduler, config
 from cadmium.utils import get_subject
 
+from loguru import logger
+
 
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
-
 
 class CadmiumBot(commands.Bot):
 
@@ -20,14 +21,19 @@ class CadmiumBot(commands.Bot):
     ):
         """The Cadmium Discord bot."""
 
+        logger.info("Initializing bot")
+
+        prefix = config.get('prefix')
+
         super().__init__(
-            command_prefix=config.get('prefix'),
+            command_prefix=prefix,
             intents=intents,
             help_command=SimplePrettyHelp(),
         )
 
         # Subjects channel
         self.channel_id = int(config.get('channel'))
+        logger.debug(f"Subjects channel ID: {self.channel_id}")
 
         # Command check
 
@@ -47,19 +53,21 @@ class CadmiumBot(commands.Bot):
             'dashboard', 'test', 'config', 'auto_thread', 'error', 'admin',
             'welcome'
         ):
-            print(f"Loading extension {ext}")
+            logger.info(f"Loading extension: {ext}")
             self.load_extension(f'cadmium.extensions.{ext}', store=False)
 
     async def on_ready(self):
         """When the bot is ready."""
 
+        interval = config.get('interval')
+
         # Fetch channel
         self.channel = self.get_channel(self.channel_id)
 
         # Schedule subject sending
-        scheduler.schedule(self.send_subject, config.get('interval'))
+        scheduler.schedule(self.send_subject, interval)
 
-        print("Ready")
+        logger.info("Ready")
 
     async def send_subject(self, channel_id=None):
         """Generate and send a subject."""

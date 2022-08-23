@@ -4,6 +4,7 @@ from typing import Dict, List
 import random
 
 from PyProbs import Probability
+from loguru import logger
 
 from cadmium.subject.classes import Subject
 from cadmium.subject.exceptions import EmptyWordListError
@@ -36,27 +37,43 @@ class SubjectGenerator():
     def get_subject(self) -> str:
         """Generate a random subject."""
 
+        logger.info("Getting a subject")
+
         noun = adjective = second_adjective = verb = adverb = None
 
         # Verb
         if self.prob('verb'):
+
+            logger.debug("Subject type: verb")
+
             verb = self.get_word('verb')
+            logger.debug(f"Adding verb: {verb}")
 
             # Adverb
             if self.prob('adverb'):
+
                 adverb = self.get_word('adverb')
+                logger.debug(f"Adding adverb: {adverb}")
 
         # Noun
         else:
+
+            logger.debug("Subject type: noun")
+
             noun = self.get_word('noun')
+            logger.debug(f"Adding noun: {noun}")
 
             # Adjective
             if self.prob('adjective'):
+
                 adjective = self.get_word('adjective')
+                logger.debug(f"Adding adjective: {adjective}")
 
                 # Second adjective
                 if self.prob('second_adjective'):
+
                     second_adjective = self.get_word('adjective')
+                    logger.debug(f"Adding adjective: {second_adjective}")
 
         return Subject(
             verb=verb,
