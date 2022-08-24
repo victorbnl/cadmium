@@ -14,14 +14,17 @@ def get_inflection(word):
         .get()
     )
 
-    return {'gender': res.gender, 'number': res.number}
+    gender = res.gender
+    number = res.number
+    inflection = {'gender': gender, 'number': number}
+
+    logger.debug(f"Getting inflection of word {word}: ({gender}, {number})")
+
+    return inflection
 
 
 def inflect_adjective(adjective, gender, number):
     """Inflect adjective according to gender and number."""
-
-    logger.debug(f"Inflecting adjective: {adjective}")
-    logger.debug(f"to gender: {gender} and number: {number}")
 
     adjective_entry_id = (
         Inflection.select(Inflection.entry_id)
@@ -41,6 +44,6 @@ def inflect_adjective(adjective, gender, number):
         .form
     )
 
-    logger.debug(f"Got inflected adjective: {inflected_adjective}")
+    logger.debug(f"Inflecting adjective {adjective} ({gender}, {number}): {inflected_adjective}")
 
     return inflected_adjective
