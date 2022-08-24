@@ -24,10 +24,9 @@ class SubjectGenerator():
         """Choose whether word type is chosen or not according to prob."""
 
         prob = float(getattr(self.probs, nature))
-        logger.debug(f"Probs of getting: {nature} are: {prob}")
-
         result = Probability.Prob(prob)
-        logger.debug(f"Getting an {nature}: {'yes' if result else 'no'}")
+
+        logger.debug(f"{'Getting' if result else 'Not getting'} {nature} (probs were {prob})")
 
         return result
 
@@ -83,7 +82,11 @@ class SubjectGenerator():
                     logger.debug(f"Adding adjective: {second_adjective}")
                     tokens.append(Token('adjective', second_adjective))
 
-        return Subject(type=type, tokens=tokens)
+        subject = Subject(type=type, tokens=tokens)
+
+        logger.info(f"Got subject {[token.text for token in tokens]}")
+
+        return subject
 
 
 def get_subject(words: Dict[str, List[str]], probs: Dict[str, int]):
