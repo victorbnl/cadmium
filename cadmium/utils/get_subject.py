@@ -1,5 +1,4 @@
 from cadmium import subject, lists, config, artwork
-from cadmium.utils import subject_utils
 
 
 def change_verb_prob(factor):
@@ -37,15 +36,12 @@ def get_subject():
     )
 
     # Change verb prob
-    if the_subject.verb and not the_subject.noun:
+    if the_subject.type == 'verb':
         change_verb_prob(-1)
-    elif the_subject.noun and not the_subject.verb:
+    elif the_subject.type == 'noun':
         change_verb_prob(+1)
 
-    # Format it
-    the_subject = subject_utils.format_subject(the_subject)
-
     # Generate a banner
-    banner = artwork.subject_banner(config.get('message'), the_subject)
+    banner = artwork.subject_banner(config.get('message'), str(the_subject))
 
     return banner

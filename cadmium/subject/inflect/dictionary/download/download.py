@@ -2,8 +2,8 @@ from io import BytesIO
 from urllib.request import urlopen
 from zipfile import ZipFile
 
-from cadmium.inflect.dictionary import database
-from cadmium.inflect.dictionary.download import parse_xml
+from cadmium.subject.inflect.dictionary import database
+from cadmium.subject.inflect.dictionary.download import parse_xml
 
 
 URL = 'http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/dela-fr-public-u8-xml.zip' # noqa

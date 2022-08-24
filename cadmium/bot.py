@@ -51,7 +51,7 @@ class CadmiumBot(commands.Bot):
 
         # Load extensions
         for ext in (
-            'dashboard', 'test', 'config', 'auto_thread', 'error', 'admin',
+            'dashboard', 'test', 'config', 'auto_thread', 'admin',
             'welcome'
         ):
             logger.info(f"Loading extension: {ext}")

@@ -6,7 +6,7 @@ import random
 from PyProbs import Probability
 from loguru import logger
 
-from cadmium.subject.classes import Subject
+from cadmium.subject.classes import Subject, Token
 from cadmium.subject.exceptions import EmptyWordListError
 
 
@@ -24,11 +24,9 @@ class SubjectGenerator():
         """Choose whether word type is chosen or not according to prob."""
 
         prob = float(getattr(self.probs, nature))
-
         logger.debug(f"Probs of getting: {nature} are: {prob}")
 
         result = Probability.Prob(prob)
-
         logger.debug(f"Getting an {nature}: {'yes' if result else 'no'}")
 
         return result
@@ -36,9 +34,11 @@ class SubjectGenerator():
     def get_word(self, nature: str) -> str:
         """Get a random word with the given nature."""
 
+        # List not empty
         if len(getattr(self.words, nature)) > 0:
             return random.choice(getattr(self.words, nature))
 
+        # List empty
         else:
             raise EmptyWordListError(f"Empty word list: {nature}")
 
@@ -47,49 +47,43 @@ class SubjectGenerator():
 
         logger.info("Getting a subject")
 
-        noun = adjective = second_adjective = verb = adverb = None
+        tokens = []
 
         # Verb
         if self.prob('verb'):
-
-            logger.debug("Subject type: verb")
+            type = 'verb'
 
             verb = self.get_word('verb')
             logger.debug(f"Adding verb: {verb}")
+            tokens.append(Token('verb', verb))
 
             # Adverb
             if self.prob('adverb'):
-
                 adverb = self.get_word('adverb')
                 logger.debug(f"Adding adverb: {adverb}")
+                tokens.append(Token('adverb', adverb))
 
         # Noun
         else:
-
-            logger.debug("Subject type: noun")
+            type = 'noun'
 
             noun = self.get_word('noun')
             logger.debug(f"Adding noun: {noun}")
+            tokens.append(Token('noun', noun))
 
             # Adjective
             if self.prob('adjective'):
-
                 adjective = self.get_word('adjective')
                 logger.debug(f"Adding adjective: {adjective}")
+                tokens.append(Token('adjective', adjective))
 
                 # Second adjective
                 if self.prob('second_adjective'):
-
                     second_adjective = self.get_word('adjective')
                     logger.debug(f"Adding adjective: {second_adjective}")
+                    tokens.append(Token('adjective', second_adjective))
 
-        return Subject(
-            verb=verb,
-            adverb=adverb,
-            noun=noun,
-            adjective=adjective,
-            second_adjective=second_adjective
-        )
+        return Subject(type=type, tokens=tokens)
 
 
 def get_subject(words: Dict[str, List[str]], probs: Dict[str, int]):
