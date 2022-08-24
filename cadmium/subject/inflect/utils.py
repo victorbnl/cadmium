@@ -2,7 +2,7 @@
 
 from loguru import logger
 
-from cadmium.subject.inflect.dictionary.database import Entry, Inflection
+from cadmium.subject.inflect.dictionary import Entry, Inflection
 
 
 def get_inflection(word):

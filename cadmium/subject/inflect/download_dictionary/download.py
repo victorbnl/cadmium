@@ -2,8 +2,8 @@ from io import BytesIO
 from urllib.request import urlopen
 from zipfile import ZipFile
 
-from cadmium.subject.inflect.dictionary import database
-from cadmium.subject.inflect.dictionary.download import parse_xml
+from cadmium.subject.inflect import dictionary
+from cadmium.subject.inflect.download_dictionary import parse_xml
 
 
 URL = 'http://infolingu.univ-mlv.fr/DonneesLinguistiques/Dictionnaires/dela-fr-public-u8-xml.zip' # noqa
@@ -21,13 +21,13 @@ def download():
     dictObject = parse_xml.parse(xmlfile)
 
     # Populate database
-    with database.db.atomic():
+    with dictionary.db.atomic():
         # Add entries
         for entry in dictObject.entries:
-            entry_id = database.Entry.add(entry.lemma, entry.pos)
+            entry_id = dictionary.Entry.add(entry.lemma, entry.pos)
             # Add inflections
             for inflection in entry.inflections:
-                database.Inflection.create(
+                dictionary.Inflection.create(
                     entry_id=entry_id,
                     form=inflection.form,
                     gender=inflection.gender or "a",

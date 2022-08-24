@@ -1,5 +1,5 @@
 from lxml.etree import iterparse
-from cadmium.inflect.dictionary.download.parse_xml.classes import Dict, Entry, Inflected
+from cadmium.subject.inflect.download_dictionary.parse_xml.classes import Dict, Entry, Inflected
 
 
 def parse(xml):
