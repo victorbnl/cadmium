@@ -7,8 +7,7 @@ from loguru import logger
 def schedule(job, interval):
     """Add a job to the scheduler."""
 
-    logger.info("Adding job to the scheduler")
-    logger.debug("Interval: {interval}")
+    logger.info(f"Adding job to the scheduler (interval: {interval})")
 
     scheduler = AsyncIOScheduler()
     scheduler.add_job(
