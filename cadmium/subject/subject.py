@@ -3,7 +3,7 @@
 from typing import Dict, List
 import random
 
-from PyProbs import Probability
+from pyprobs import Probability
 from loguru import logger
 
 from cadmium.subject.classes import Subject, Token
@@ -24,7 +24,7 @@ class SubjectGenerator():
         """Choose whether word type is chosen or not according to prob."""
 
         prob = float(getattr(self.probs, nature))
-        result = Probability.Prob(prob)
+        result = Probability.prob(prob)
 
         logger.debug(f"{'Getting' if result else 'Not getting'} {nature} (probs were {prob})")
 
