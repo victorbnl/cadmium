@@ -82,7 +82,11 @@ class CadmiumBot(commands.Bot):
         banner = get_subject.get_subject()
 
         # Send it
-        await channel.send(
+        message = await channel.send(
             content=config.get('mention'),
             file=discord.File(fp=banner, filename="subject.jpg")
         )
+
+        # Publish it if news channel
+        if channel.type == discord.ChannelType.news:
+            await message.publish()
